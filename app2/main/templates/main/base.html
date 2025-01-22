@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock  %}</title>
+
+    {% comment %} bootstrap {% endcomment %}
+    <link rel='stylesheet' href="{% static 'bootstrap\css\bootstrap.min.css' %}">
+    {% comment %} css {% endcomment %}
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+</head>
+<body>
+    <header class="header sticky-top">
+        <div class="header-container d-flex">
+            <navbar class="header-nav pt-4">
+                <ul="header-list d-flex">
+                    <li>
+                        <a href="#"class="nav-a m-3">Home</a>
+                    </li>
+
+                    <li>
+                        <a href="#"class="nav-a m-3">Shop</a>
+                    </li>
+                </ul>
+            </navbar>
+            <div class="header-logo">
+                <a href="#"><img src="{% static 'img/pizza_logo.png' %}" alt="" class="pizza-logo"></a>
+            </div>
+            <div class="header-profile">
+                <a href="#"class="m-3">LOGIN</a>
+            </div>
+        </div>
+    </header>
+    <div class="container">
+        {% block content %}
+        {% endblock  %}
+    </div>
+
+
+
+
+
+
+
+    {% comment %} js for bootstrap {% endcomment %}
+    <script scr="{% static 'bootstrap\js\bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>
