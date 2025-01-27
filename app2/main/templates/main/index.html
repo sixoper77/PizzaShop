@@ -1,34 +1,37 @@
-{% extends "main.html" %}
+{% extends "main/base.html" %}
 {% load static %}
 
 {% block title %}Home{% endblock title %}
 
 {% block content %}
 <section class="home d-flex flex-column">
-    <div class="home-title">
+    <div class="home-title d-flex flex-column align-items-center">
         <a href="#" class="home-btn mt-4">All Products</a>
 
     </div>
     <div class="home-recomendation">
         <div class="rec-title">
-            <h3><span>Popular Accesseories</span></h3>
+            <h3><span>Popular Pizza</span></h3>
         </div>
     </div>
-    <div class="home-cards">
-        {% for product in products  %}
-            <a href="{{products.get_absolute_url}}"class="home-cards">
-                <img src="{{products.image.url}}"class="card-img" alt="">
-                <h5 class="title-card">{{product.name}}</h5>
-                {% if product.discount %}
-                <div class="cart-discount">
-                    <p class="line">{{product.price}}</p>
-                    <p>{{produc.sell_price}}</p>
-                </div>
-                {% else %}
-                <p class="price">{{product.price}}</p>
-                {% endif %}
-            </a>
-        {% endfor %}
+    <div class="home-cards d-flex gap-4">
+        {% for product in products %}
+        <a href="{{ product.get_absolute_url }}" class="home-cards d-flex flex-column align-items-center text-center">
+            <img src="{{ product.image.url }}" class="card-img" alt="">
+            <h5 class="title-card">{{ product.name }}</h5>
+            {% if product.discount %}
+            <div class="cart-discount d-flex gap-2">
+                <p class="line">{{ product.price }}</p>
+                <p>{{ product.sell_price }}</p>
+            </div>
+            {% else %}
+                <p class="price">{{ product.price }}</p>
+            {% endif %}
+        </a>
+    {% endfor %}
     </div>
 </section>
+{% comment %} Добавить свое что то на низ сюда!!!!!!! {% endcomment %}
+<img src="{% static 'img/pizza_logo.png' %}"class="pizza_logo" alt="">
+<img src="{% static 'img/pizza_logo.png' %}"class="subtitle" alt="">
 {% endblock content %}

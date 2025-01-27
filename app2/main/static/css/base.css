@@ -1,0 +1,129 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root{
+    --box-shadow: 0px 1px 1px rgba(0,0,0,0.363);
+}
+
+body{
+    font-family: "Montserrat", serif;
+    font-size: 18px;
+    padding: 0;
+    margin: 0;
+    overflow-x: hidden;
+}
+
+ul{
+    list-style: none;
+    padding: 0;
+}
+
+a{
+    text-decoration: none;
+    color: #000;
+
+}
+
+h1{
+    font-size: 48px;
+
+}
+
+h2{
+    font-size: 48px;
+    font-weight: 600;
+}
+
+h3{
+    font-size: 36px;
+}
+
+h5{
+    font-size: 18px;
+    margin: 0;
+    font-weight: 600;
+}
+
+.header-container{
+    box-sizing: border-box;
+    max-width: 1400px;
+    margin: 0 auto;
+    justify-content: space-between;
+    padding: 0 15px;
+    align-items: center;
+
+}
+
+.contaier{
+    box-sizing: border-box;
+    max-width: 1600px;
+    margin: 0 auto;
+
+}
+
+.header-logo img {
+    max-width: 120px; 
+    max-height: 100px; 
+    object-fit: contain; 
+}
+
+.header{
+    height: 80px;
+    background-color: #fff;
+    box-shadow: var(--box-shadow);
+}
+
+.header-list{
+    text-transform: uppercase;
+}
+
+.home{
+    align-items: center;
+}
+
+.home-title{
+    margin-top: 10px;
+    margin-bottom: 56px;
+}
+
+.home-card{
+    width: 200px;
+    height: 325px;
+    border: 1px solid #00000027;
+    border-radius: 5px;
+    transition: all 0.5s ease;
+    background-color: #fff;
+}
+
+.home-card:hover{
+    border: 1px solid #000;
+}
+
+.title-card{
+    max-width: 185px;
+    margin-top: 20px;
+    min-height: 70px;
+}
+
+.card-img{
+    width: 195px;
+    height: 195px;
+}
+
+.price{
+    font-size: 20px;
+    font-weight: 700;
+    margin-top: -10px;
+}
+
+.home-btn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 180px;
+    height: 50px;
+    border: 1px solid #00000027 ;
+    border-radius: 5px;
+    transition: all 0.4s ease;
+    z-index: 2;
+}
+
