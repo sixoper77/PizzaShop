@@ -127,3 +127,114 @@ h5{
     z-index: 2;
 }
 
+/* .subtitle{
+    position: absolute;
+    bottom: 0%;
+    left: 44.5%;
+} */
+
+.detail-image{
+    width: 400px;
+    height: 403px;
+
+}
+
+.detail-product{
+    margin-top: 50px;
+}
+
+.detail-description{
+    margin-left: 40px;
+    margin-top: 40px;
+} 
+
+.detail-description p{
+    margin-top: 30px;
+    max-width: 700px;
+}   
+
+.detail-description h2 span{
+    font-size: 56px;
+}
+
+.detail-discount{
+    margin-top: -10px;
+    font-weight: 600;
+}
+
+.cart-discount .price{
+    margin-top: -1px;
+}
+.line{
+    opacity: 0.7;
+    text-decoration: line-through;
+    font-weight: 300;
+}
+
+.cart-btn{
+    width: 180px;
+    height: 50px;
+    border: 1px solid #00000027 ;
+    border-radius: 5px;
+    transition: all 0.4s ease;
+    z-index: 2;
+    margin-top: 20px;
+}
+
+.cart-btn:hover{
+    border: 1px solid #00000027 ;
+}
+
+.main{
+    margin-left: 150px;
+}
+
+.main-title{
+    font-size: 36px;
+    margin-bottom: 10px;
+    margin-top: 65px;
+}
+
+.items{
+    display: grid;
+    grid-template-columns: repeat(auto-fill,225px);
+    width: 100%;
+    max-width: 1300px;
+    justify-content: center;
+    justify-items: center;
+    column-gap: 0px;
+    row-gap: 10px;
+    margin: 0 auto;
+}
+
+.sidebar{
+    margin-top: 70px;
+}
+
+.list{
+    margin-left: -80px;
+}
+
+.sidebar ul li{
+    font-size: 20px;
+    width: 165px;
+    height: 35px;
+    margin-bottom: 5px;
+
+}
+
+.sidebar ul li a{
+    margin-left: 15px;
+    width: 165px;
+}
+
+.sidebar ul{
+    margin-top: 20px;
+
+}
+
+.selected{
+    border: 1px solid #000;
+    border-radius: 5px;
+    
+}

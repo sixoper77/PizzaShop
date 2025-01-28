@@ -14,13 +14,13 @@
             <p>Description:{{product.description | linebreaks}}</p>
             {% if product.discount %}
                 <div class="cart-discount d-flex gap-2">
-                    <p class="line">{{product.price}}</p>
-                    <p>{{produc.sell_price}}</p>
+                    <p class="line"> ${{product.price}}</p>
+                    <p> ${{product.sell_price}}</p>
                 </div>
             {% else %}
                 <p class="price">{{product.price}}</p>
             {% endif %}
-            <a href="#"class="cart-btn d-flex align-items-center jusctify-content-center">Add to cart</a>
+            <a href="#"class="cart-btn d-flex align-items-center justify-content-center">Add to cart</a>
         </div>
     </div>
 {% endblock  %}
