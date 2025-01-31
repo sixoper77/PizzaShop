@@ -8,5 +8,3 @@ from .forms import CartAddProductForm
 def card_add(request,product_id):
     cart=Cart(request)
     product=get_object_or_404(Products,id=product_id)
-
-# Create your views here.
