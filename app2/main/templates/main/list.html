@@ -43,12 +43,19 @@
             </div>
             {% comment %} Пагинация создание {% endcomment %}
             <ul class="pagination">
-                <li>{% if not products.has_previous %}disabled{% endif %}
+                <li class="{% if not products.has_previous %}disabled{% endif %}">
                     <a href="{% if products.has_previous %}?page={{products.privious_page_number}}{% endif %}">Previous</a>
                 </li>
                 {% for page in products.paginator.page_range  %}
-                    {% if page >= products.number |add:-2 and page <= products.number |add:2 %}{% endif %}
+                {% if page >= products.number|add:-2 and page <= products.number|add:2%}
+                    <li>
+                        <a href="?page={{page}}"class="{% if products.number == page %}disabled{% endif %}">{{page}}</a>
+                    </li>
+                    {% endif %}
                 {% endfor %}
+                <li class="{% if not products.has_previous %}disabled{% endif %}">
+                    <a href="{% if products.has_next %}?page={{products.next_page_number}}{% endif %}">Next</a>
+                </li>
             </ul>
         </div>
     </div>

@@ -13,15 +13,15 @@ def product_list(request,category_slug=None):
     # получаем страницу
     page=request.GET.get('page',1)
     category=None
+    products=Products.objects.all()
     # создание пагинатора
-    paginator=Paginator(products,1)
+    paginator=Paginator(products,5)
     # задаю страницу
     current_page=paginator.page(int(page))
     categories=Category.objects.all()
-    products=Products.objects.all()
     if category_slug:
         category=get_object_or_404(Category,slug=category_slug)
-        paginator=Paginator(products.filter(category=category),1)
+        paginator=Paginator(products.filter(category=category),5)
         current_page=paginator.page(int(page))
     return render(request,'main/list.html',{'category':category,
                                             'categories':categories,
