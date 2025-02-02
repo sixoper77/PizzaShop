@@ -115,23 +115,6 @@ h5{
     margin-top: -10px;
 }
 
-.home-btn{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 180px;
-    height: 50px;
-    border: 1px solid #00000027 ;
-    border-radius: 5px;
-    transition: all 0.4s ease;
-    z-index: 2;
-}
-
-/* .subtitle{
-    position: absolute;
-    bottom: 0%;
-    left: 44.5%;
-} */
 
 .detail-image{
     width: 400px;
@@ -379,4 +362,99 @@ h5{
 .total{
     margin:50px 0 25px 0;
 }
+.material-textfield {
+    position: relative;
+    width: 200px;
+}
 
+.material-textfield input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    background: transparent;
+}
+
+.material-textfield label {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    font-size: 16px;
+    color: #888;
+    transition: all 0.3s ease;
+    pointer-events: none;
+    background: white;
+    padding: 0 5px;
+}
+
+.material-textfield input:focus,
+.material-textfield input:not(:placeholder-shown) {
+    border-color: #6200ea;
+}
+
+.material-textfield input:focus + label,
+.material-textfield input:not(:placeholder-shown) + label {
+    top: 0;
+    font-size: 12px;
+    color: #6200ea;
+}
+
+.header-profile {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.cart-link {
+    text-decoration: none;
+    color: #000;
+    font-size: 20px;
+}
+
+.nav-a {
+    text-decoration: none;
+    font-weight: bold;
+    color: #333;
+    transition: color 0.3s;
+}
+
+/* .nav-a:hover {
+    color: #6200ea;
+}
+.home-btn:hover {
+    color: #6200ea;
+} */
+
+.home-btn{
+    text-decoration: none;
+    font-weight: bold;
+    color: #333;
+    transition: color 0.3s;
+}
+
+
+.material-button {
+    background-color: black;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.material-button:hover {
+    background-color: #333;
+}
+
+.cart_quantity {
+    display: block;
+    text-align: center;
+    font-size: 14px;
+    margin-top: 4px;
+}
