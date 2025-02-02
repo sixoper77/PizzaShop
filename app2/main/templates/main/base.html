@@ -4,12 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}{% endblock  %}</title>
+    <title>{% block title %}{% endblock %}</title>
 
-    {% comment %} bootstrap {% endcomment %}
-    <link rel='stylesheet' href="{% static 'bootstrap/css/bootstrap.min.css' %}">
-    {% comment %} css {% endcomment %}
+    {% comment %} Bootstrap {% endcomment %}
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    {% comment %} CSS {% endcomment %}
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    {% comment %} Material Icons {% endcomment %}
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Outlined" rel="stylesheet">
 </head>
 <body>
     <header class="header sticky-top">
@@ -21,19 +23,31 @@
                 </ul>
             </nav>
             <div class="header-logo">
-                <a href="#"><img src="{% static 'img/pizza_logo.png' %}" alt="" class="pizza-logo"></a>
+                <a href="#"><img src="{% static 'img/pizza_logo.png' %}" alt="Pizza Logo" class="pizza-logo"></a>
             </div>
-            <div class="header-profile">
+            <div class="header-profile pt-2">
+                <a href="{% url 'cart:cart_detail' %}" class="cart-link">
+                    <span class="material-icons-outlined">shopping_cart</span>
+                </a>
                 <a href="#" class="nav-a">LOGIN</a>
+                <p class="cart_quantity">
+                    {% with cart_quantity=cart|length %}
+                        {% if cart_quantity > 0 %}
+                            {{cart_quantity}}
+                        {% else %}
+                            0
+                        {% endif %}
+                    {% endwith %}
+                </p>
             </div>
         </div>
     </header>
     <div class="container">
         {% block content %}
-        {% endblock  %}
+        {% endblock %}
     </div>
 
-    {% comment %} js for bootstrap {% endcomment %}
+    {% comment %} JS for Bootstrap {% endcomment %}
     <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 </body>
 </html>

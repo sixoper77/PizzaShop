@@ -1,6 +1,7 @@
 {% extends "main/base.html" %}
 {% load static %}
-{% block title %}Cart{% endblock title %}
+
+{% block title %}Cart{% endblock %}
 
 {% block content %}
     <section class="cart d-flex">
@@ -8,22 +9,22 @@
             <h2>Shopping Cart</h2>
         </div>
         <div class="cart-cards">
-            {% for item in cart  %}
+            {% for item in cart %}
                 {% with product=item.product %}
                     <div class="cart-card d-flex">
                         <div class="cart-card-img">
-                            <img src="{% if product.image %}{{product.image.url}}{% else %}{% static 'img/Not found image.png' %}{% endif %}" class="detail-image" alt="">
+                            <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/Not found image.png' %}{% endif %}" class="detail-image" alt="{{ product.name }}">
                         </div>
                         <div class="cart-card-info">
                             <div class="cart-card-name">
-                                <p>{{product.name}}</p>
+                                <p>{{ product.name }}</p>
                             </div>
                             <div class="cart-card-q">
-                                <p>Quantity: {{item.quantity}}</p>
+                                <p>Quantity: {{ item.quantity }}</p>
                             </div>
                         </div>
-                        <form action="{% url "cart:cart_remove" product.id %}" method="post">
-                            <input type="submit" value="Remove" class='remove_btn'>
+                        <form action="{% url 'cart:cart_remove' product.id %}" method="post">
+                            <input type="submit" value="Remove" class="remove_btn">
                             {% csrf_token %}
                         </form>
                         <div class="cart-card-price">
@@ -41,11 +42,15 @@
             {% endfor %}
         </div>
         <div class="total">
-            <h5>Total sum:${{cart.get_total_price}}</h5>
+            <h5>Total sum: ${{ cart.get_total_price }}</h5>
         </div>
         <div class="cart-buttons d-flex gap-3">
             <a href="/shop" class="cart-btn">Continue Shopping</a>
-            <a href="#" class="cart-btn">Checkout</a>
+            {% with cart_quantity=cart|length %}
+                {% if cart_quantity > 0 %}
+                    <a href="" class="cart-btn">Checkout</a>
+                {% endif %}
+            {% endwith %}
         </div>
     </section>
-{% endblock content %}
+{% endblock %}

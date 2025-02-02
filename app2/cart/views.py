@@ -5,7 +5,7 @@ from .cart import Cart
 from .forms import CartAddProductForm
 
 @require_POST
-def card_add(request,product_id):
+def cart_add(request,product_id):
     cart=Cart(request)
     product=get_object_or_404(Products,id=product_id)
     form=CartAddProductForm(request.POST)
