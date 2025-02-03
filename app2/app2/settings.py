@@ -134,3 +134,5 @@ MEDIA_URL='media/'
 MEDIA_ROOT=BASE_DIR/'media'
 
 CART_SESSION_ID='cart'
+
+AUTH_USER_MODEL='users.User'
