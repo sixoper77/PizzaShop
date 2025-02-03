@@ -385,7 +385,7 @@ h5{
     transform: translateY(-50%);
     font-size: 16px;
     color: #888;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
     pointer-events: none;
     background: white;
     padding: 0 5px;
@@ -393,14 +393,14 @@ h5{
 
 .material-textfield input:focus,
 .material-textfield input:not(:placeholder-shown) {
-    border-color: #6200ea;
+    border-color: #000;
 }
 
 .material-textfield input:focus + label,
 .material-textfield input:not(:placeholder-shown) + label {
     top: 0;
     font-size: 12px;
-    color: #6200ea;
+    color: #000;
 }
 
 .header-profile {

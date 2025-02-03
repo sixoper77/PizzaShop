@@ -47,7 +47,7 @@
         <div class="cart-buttons d-flex gap-3">
             <a href="/shop" class="cart-btn">Continue Shopping</a>
             {% with cart_quantity=cart|length %}
-                {% if cart_quantity > y0 %}
+                {% if cart_quantity > 0 %}
                     <a href="" class="cart-btn">Checkout</a>
                 {% endif %}
             {% endwith %}
