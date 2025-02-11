@@ -4,4 +4,30 @@
 {% block title %}Profile{% endblock title %}
 
 {% block content %}
+    <div class="d-flex">
+        <div class="profile bg-white p-4 mb-4 mx-2 rounded">
+            <h2 class="mb-2">Profile</h2>
+            <form action="{% url "users:profile" %}" method="post" enctype="multipart/form-data" >
+                {% csrf_token %}
+                <div class="d-flex">
+                    <div class="1box">
+                        <div class="col-md-12 mb-3">
+                            {% if user.image %}
+                                <img src="{{ user.image.url }}" alt="Your Avatar" class="img-fluid" style="max-width: 150px; max-height: 150px;">
+                            {% else %}
+                                    <img src="{% static 'img/Not found image.png' %}" alt="Avatar" class="img-fluid" style="max-width: 150px; max-height: 150px;">
+                            {% endif %}
+                            <input type="file" class="form-control form-styleprofile mt-2" id="id_image" name="image" accept="image/*">
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <label for="id_first_name" class="form-label">First Name</label>
+                            <input type="text" class="form-control form-styleprofile" id="id_first_name"
+                             name="first_name" placeholder="Your First Name" value="{{form.first_name.value}}" required>
+                        </div>
+                        
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 {% endblock content %}
