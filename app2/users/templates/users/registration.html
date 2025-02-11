@@ -4,4 +4,18 @@
 {% block title %}Registration{% endblock title %}
 
 {% block content %}
+<section class="login-reg">
+    <div class="login-title">
+        <h2>Registration</h2>
+        <form action="{% url "user:registration" %}" method="post">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="id_first_name" class="form-label form-stylereg">First Name</label>
+                    ы
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
 {% endblock content %}

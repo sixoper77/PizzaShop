@@ -43,10 +43,37 @@
                         </div>
                     </div>
                 </div>
-                <button type="submit" class="profile-btn">Save</button>
+                <div class="btns d-flex gap-4 mt-4">
+                    <button type="submit" class="profile-btn">Save</button>
+                    <a class="profile-btn" href="{% url "user:logout" %}">Logout</a>
+                </div>
             </form>
+            <div class="orders">
+                <h2 class="mb-2">Your Orders</h2>
+                {% if orders %}
+                    <div class="orderss">
+                        {% for order in orders  %}
+                            <div class="order-cart">
+                                <h5 class="order-title">Order № {{order.id}}</h5>
+                                <p class="order-desc">
+                                    {% for item in order.items.all  %}
+                                        <div class="orders-carts">
+                                            <span class="dadad">Name:</span><a class="" href="{% url "main:product_detail" item.product.slug %}">{{item.product.name}}</a>
+                                            <br>
+                                            <span class="dadad">Quantity:</span>{{item.quantity}},
+                                            <span class="dadad">Price $:{{item.price}}</span><br>
+                                            <span class="dadad">Date:</span>{{order.created}}
+
+                                        </div>
+                                    {% endfor %}
+                                </p>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <h4 class="notorders">You haven`t ordered anything yet.</h4>
+                {% endif %}
+            </div>
         </div>
-        {% comment %} orders {% endcomment %}
-        
     </div>
 {% endblock content %}
