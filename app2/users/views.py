@@ -21,17 +21,17 @@ def login(request):
     return render(request,'users/login.html')
 
 def registration(request):
-    if request.method=='POST':
-        form=UserRegistrationForm(data=request.POST)
+    if request.method == 'POST':
+        form = UserRegistrationForm(data=request.POST)
         if form.is_valid():
-            form.save()
-            user=form.instance
-            auth.login(request,user)
-            messages.success(request,f'{user.username},Successful Registration')
-            return HttpResponseRedirect(reverse('user:login'))
+            user = form.save()
+            auth.login(request, user)
+            messages.success(request, f'{user.username}, Successful Registration')
+            return HttpResponseRedirect(reverse('user:profile'))  # Изменил редирект на профиль
     else:
-        form=UserRegistrationForm()
-    return render(request,'users/registration.html')
+        form = UserRegistrationForm()
+    return render(request, 'users/registration.html', {'form': form})
+
 @login_required
 def profile(request):
     if request.method == 'POST':
