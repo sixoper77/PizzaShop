@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'main',
     'cart',
     'users',
+    'orders',
+    'payment',
 ]
 
 MIDDLEWARE = [
@@ -136,3 +138,7 @@ MEDIA_ROOT=BASE_DIR/'media'
 CART_SESSION_ID='cart'
 
 AUTH_USER_MODEL='users.User'
+STRIPE_PUBLISHABLE_KEY='pk_test_51QrfneGGYzjuAv3nQcZdTlcRn3WbOefPPGUnE9gxMvXeeNaJtgyLjHgRtZLIbSAmEHKelcELiZOzlfw17S5qoGZT0093RC1xsj'
+STRIPE_SECRET_KEY='sk_test_51QrfneGGYzjuAv3nRzt2WsHTDlSGxiHCZRxNa3c5XGouqLvf2DldaVHRSH65bO4Dccqxh5s3YUEbi5rb6ISeL4Sq00KZwBuWLU'
+STRIPE_API_VERSION='2022-08-01'
+STRIPE_WEBHOOK_SECRET='whsec_e8349d4811e1ca1b3fa6831c413c5f117e956d2593b557f8a79ae62f63340cfd'
