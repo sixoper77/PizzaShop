@@ -1,0 +1,21 @@
+{% load socialaccount %}
+<html>
+    {% load socialaccount %}
+    <head>
+        <title>Register now!</title>
+    </head>
+    <body>
+        <h1>Register now!</h1>
+
+        <form method="POST" autocomplete="off">
+            {% csrf_token %}
+            {{ registerform.as_p }}
+            <input type="submit" value="Register"/>
+        </form>
+
+        <br>
+
+        <h3>OR</h3>
+        <a href="{% provider_login_url 'google' %}">Sign in with Google</a>
+    </body>
+</html>

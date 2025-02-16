@@ -15,7 +15,7 @@ def login(request):
             user=auth.authenticate(username=username,password=password)
             if user:
                 auth.login(request,user)
-                return HttpResponseRedirect(reverse('main:product'))
+                return HttpResponseRedirect(reverse('main:product_list'))
     else:
         form=UserLoginForm()
     return render(request,'users/login.html')
@@ -27,7 +27,7 @@ def registration(request):
             user = form.save()
             auth.login(request, user)
             messages.success(request, f'{user.username}, Successful Registration')
-            return HttpResponseRedirect(reverse('user:profile'))  # Изменил редирект на профиль
+            return HttpResponseRedirect(reverse('user:profile'))
     else:
         form = UserRegistrationForm()
     return render(request, 'users/registration.html', {'form': form})
@@ -51,4 +51,10 @@ def profile(request):
 def logout(request):
     auth.logout(request)
     return redirect(reverse('main:product_list'))
+
+def google_auth(request):
+    return render(request,'users/google_auth.html')
+
+def google_login(request):
+    return render(request,'users/googlelogin.html')
 
