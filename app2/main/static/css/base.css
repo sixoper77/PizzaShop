@@ -119,7 +119,7 @@ h5{
 .detail-image{
     width: 400px;
     height: 403px;
-
+    
 }
 
 .detail-product{
@@ -276,12 +276,14 @@ h5{
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-bottom: 0px; 
 }
 
 .cart-card-img img {
     width: 100%;
     height: 100%;
-    object-fit: cover; 
+    object-fit: cover;
+    margin-bottom: 0px; 
 }
 
 
@@ -336,7 +338,7 @@ h5{
     margin: 0;
 }
 
-.add-to-cart-btn{
+/* .add-to-cart-btn{
     background-color: #4CAF50; 
     color: white; 
     border: none;
@@ -350,7 +352,7 @@ h5{
 
 .add-to-cart-btn {
     background-color: #45a049; 
-}
+} */
 
 .total{
     margin:50px 0 25px 0;
@@ -540,3 +542,32 @@ h5{
 .nav-text {
     font-size: 14px;
 }
+
+.add-to-cart-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px; /* Расстояние между иконкой и текстом */
+    width: 170px; /* Длина кнопки */
+    background-color: #4CAF50; /* Зеленый цвет */
+    color: white;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.add-to-cart-btn:hover {
+    background-color: #45a049;
+}
+
+.material-symbols-outlined {
+    font-size: 20px; /* Размер иконки */
+}
+
+.detail-img {
+    margin-top: 20px; /* Можно увеличить значение, если нужно больше отступа */
+}
+

@@ -6,27 +6,33 @@
 {% block content %}
     <div class="detail-product d-flex">
         <div class="detail-img">
-            <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/Not found image.png' %}{% endif %}" class="detail-image" alt="{{ product.name }}">
+            <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/Not found image.png' %}{% endif %}" 
+                 class="detail-image" alt="{{ product.name }}">
         </div>
         <div class="detail-description">
             <h2>{{ product.name }}</h2>
             <h3>Category: {{ product.category }}</h3>
             <p>Description: {{ product.description | linebreaks }}</p>
+            
             {% if product.discount %}
                 <div class="cart-discount d-flex gap-2">
                     <p class="line"> ${{ product.price }}</p>
                     <p> ${{ product.sell_price }}</p>
                 </div>
             {% else %}
-                <p class="price"> ${{ product.price }}</p>
+                <p class="price"><strong>${{ product.price }}</strong></p>
             {% endif %}
+
             <form action="{% url 'cart:cart_add' product.id %}" class="qform" method="post">
                 <div class="cart-form">
+                    
                     {{ cart_product_form }}
                     {% csrf_token %}
                 </div>
-                <input type="submit" value="Add to cart" class="add-to-cart-btn">
-            </form>  <!-- Исправлено: Закрыт тег form -->
+                <button type="submit" class="add-to-cart-btn">
+                    <span class="material-symbols-outlined">shopping_bag</span> Add to cart
+                </button>
+            </form>
         </div>
     </div>
 {% endblock %}
