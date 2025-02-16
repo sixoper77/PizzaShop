@@ -28,6 +28,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -37,6 +38,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
+    'django.contrib.sites',
+    
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+
+    
     'main',
     'cart',
     'users',
@@ -50,9 +60,26 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
+
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    
+    "allauth.account.middleware.AccountMiddleware",
 ]
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        # For each OAuth based provider, either add a ``SocialApp``
+        # (``socialaccount`` app) containing the required client
+        # credentials, or list them here:
+        'APP': {
+            'client_id': '649782090779-aioq4b7kn7bn6g7vrr9g0bq6c68cf468.apps.googleusercontent.com',
+            'secret': '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',
+            'key': ''
+        }
+    }
+}
 
 ROOT_URLCONF = 'app2.urls'
 
@@ -68,6 +95,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'cart.context_processors.cart',
+                'django.template.context_processors.request',
             ],
         },
     },
@@ -142,3 +170,15 @@ STRIPE_PUBLISHABLE_KEY='pk_test_51QrfneGGYzjuAv3nQcZdTlcRn3WbOefPPGUnE9gxMvXeeNa
 STRIPE_SECRET_KEY='sk_test_51QrfneGGYzjuAv3nRzt2WsHTDlSGxiHCZRxNa3c5XGouqLvf2DldaVHRSH65bO4Dccqxh5s3YUEbi5rb6ISeL4Sq00KZwBuWLU'
 STRIPE_API_VERSION='2022-08-01'
 STRIPE_WEBHOOK_SECRET='whsec_e8349d4811e1ca1b3fa6831c413c5f117e956d2593b557f8a79ae62f63340cfd'
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+SITE_ID=1
+
+LOGIN_REDIRECT_URL='/shop/'
+LOGOUT_REDIRECT_URL='/'
+
+SOCIALACCOUNT_LOGIN_ON_GET=True
