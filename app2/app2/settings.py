@@ -70,6 +70,10 @@ MIDDLEWARE = [
 
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
+        "SCOPE": [
+            "profile",
+            "email",
+        ],
         # For each OAuth based provider, either add a ``SocialApp``
         # (``socialaccount`` app) containing the required client
         # credentials, or list them here:
@@ -177,8 +181,13 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 SITE_ID=1
-
+# редирект после логина или выхода
 LOGIN_REDIRECT_URL='/shop/'
 LOGOUT_REDIRECT_URL='/'
 
 SOCIALACCOUNT_LOGIN_ON_GET=True
+
+#обязательный запрос почты
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = "optional"
+ACCOUNT_AUTHENTICATION_METHOD = "username_email"
