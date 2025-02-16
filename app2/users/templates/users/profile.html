@@ -44,8 +44,12 @@
                     </div>
                 </div>
                 <div class="btns d-flex gap-4 mt-4">
-                    <button type="submit" class="profile-btn">Save</button>
-                    <a class="profile-btn" href="{% url "user:logout" %}">Logout</a>
+                    <button type="submit" class="logout-btn">Save
+                        <span class="material-symbols-outlined">save</span>
+                    </button>
+                    <a class="logout" href="{% url "user:logout" %}">Logout
+                        <span class="material-symbols-outlined">logout</span>
+                    </a>
                 </div>
             </form>
             <div class="orders">

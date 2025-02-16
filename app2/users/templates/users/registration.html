@@ -1,6 +1,6 @@
 {% extends "main/base.html" %}
 {% load static %}
-
+{% load socialaccount %}
 {% block title %}Registration{% endblock title %}
 
 {% block content %}
@@ -47,6 +47,8 @@
                 </div>
             </div>
             <button type="submit" class="login-btn form-style">Register</button>
+            <button type="submit" class="login-btn form-style">Register With google
+                <a href="{% provider_login_url 'google' %}">Sign in with Google</a></button>
         </form>
     </div>
 </section>
