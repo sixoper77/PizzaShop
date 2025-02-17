@@ -28,10 +28,10 @@
                     <img src="{% static 'img/google-logo.png' %}" alt="Google Logo" class="google-logo">
                     Sign in with Google
                 </a>
-                
-                
-                
-                
+                <a href="{% provider_login_url 'github' %}" class="github-signin-btn">
+                    <img src="{% static 'img/github-logo.png' %}" alt="Github Logo" class="google-logo">
+                    Sign in with Github
+                </a>    
             </form>
             <div class="rest-pass">
                 <hr>
