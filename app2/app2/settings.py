@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.github',
 
     
     'main',
@@ -74,16 +75,27 @@ SOCIALACCOUNT_PROVIDERS = {
             "profile",
             "email",
         ],
-        # For each OAuth based provider, either add a ``SocialApp``
-        # (``socialaccount`` app) containing the required client
-        # credentials, or list them here:
         'APP': {
             'client_id': '649782090779-aioq4b7kn7bn6g7vrr9g0bq6c68cf468.apps.googleusercontent.com',
             'secret': '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',
             'key': ''
         }
+    },
+    'github': {
+        'SCOPE': [
+            'user',
+            'repo',
+            'read:org',
+        ],
+        'APP': {
+            'client_id': 'Ov23lizrHeZkJWMX5Q4I',
+            'secret': 'e01736c996c1a5461e6e1c882a078f116109e3fb',
+            'key':''
+            
+        }
     }
 }
+
 
 ROOT_URLCONF = 'app2.urls'
 
