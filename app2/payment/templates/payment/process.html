@@ -23,7 +23,8 @@
                                 </div>
                             </div>
                             <form action="{% url "cart:cart_remove" product.id %}" method="post">
-                                <input type="submit" value="Remove" class="remove-btn">
+                                <input type="submit" value="Remove" class="remove_btn">
+                                
                                 {% csrf_token %}
                             </form>
                             <div class="cart-card-price">
@@ -40,7 +41,7 @@
                     {% endwith %}
                 {% endfor %}
                 <form action="{% url "payment:process" %}" method="post" class="payform">
-                    <input type="submit" value="Pay now" class="paynow">
+                    <input type="submit" value="Pay now" class="add-to-cart-btn">
                     {% csrf_token %}
                </form>
             </div>
