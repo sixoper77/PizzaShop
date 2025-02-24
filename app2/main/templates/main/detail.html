@@ -22,8 +22,11 @@
             {% else %}
                 <p class="price"><strong>${{ product.price }}</strong></p>
             {% endif %}
-
-            <form action="{% url 'cart:cart_add' product.id %}" class="qform" method="post">
+            {% if user.is_authenticated %}
+                <form action="{% url 'cart:cart_add' product.id %}" class="qform" method="post">
+            {% else %}
+                <form action="{% url 'user:login' %}" class="qform" method="post">
+            {% endif %}
                 <div class="cart-form">
                     
                     {{ cart_product_form }}
