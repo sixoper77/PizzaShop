@@ -34,8 +34,10 @@ def registration(request):
 
 @login_required
 def profile(request):
+    print(request)
     if request.method == 'POST':
         form = ProfileForm(data=request.POST, instance=request.user, files=request.FILES)
+        
         if form.is_valid():
             form.save()
             messages.success(request, 'Profile was changed')

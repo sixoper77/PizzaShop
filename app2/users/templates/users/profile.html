@@ -4,42 +4,42 @@
 {% block title %}Profile{% endblock title %}
 
 {% block content %}
-    <div class="d-flex">
+    <div class="d-flex justify-content-between">
         <div class="profile bg-white p-4 mb-4 mx-2 rounded">
             <h2 class="mb-2">Profile</h2>
             <form action="{% url "users:profile" %}" method="post" enctype="multipart/form-data" >
                 {% csrf_token %}
-                <div class="d-flex">
-                    <div class="1box">
+                <div class="d-flex justify-content-between">
+                    <div class="1box" style="width: 48%;">
                         <div class="col-md-12 mb-3">
                             {% if user.image %}
                                 <img src="{{ user.image.url }}" alt="Your Avatar" class="img-fluid" style="max-width: 150px; max-height: 150px;">
                             {% else %}
-                                    <img src="{% static 'img/Not found image.png' %}" alt="Avatar" class="img-fluid" style="max-width: 150px; max-height: 150px;">
+                                <img src="{% static 'img/billi.png' %}" alt="Avatar" class="img-fluid" style="max-width: 150px; max-height: 150px;">
                             {% endif %}
                             <input type="file" class="form-control form-styleprofile mt-2" id="id_image" name="image" accept="image/*">
                         </div>
                         <div class="col-md-12 mb-3">
                             <label for="id_first_name" class="form-label">First Name</label>
                             <input type="text" class="form-control form-styleprofile" id="id_first_name"
-                             name="first_name" placeholder="Your First Name" value="{{form.first_name.value}}" required>
+                                   name="first_name" placeholder="Your First Name" value="{{form.first_name.value}}" required>
                         </div>
                         <div class="col-md-12 mb-3">
                             <label for="id_last_name" class="form-label">Last Name</label>
                             <input type="text" class="form-control form-styleprofile" id="id_last_name"
-                             name="last_name" placeholder="Your Last Name" value="{{form.last_name.value}}" required>
+                                   name="last_name" placeholder="Your Last Name" value="{{form.last_name.value}}" required>
                         </div>
                     </div>
-                    <div class="2box">
+                    <div class="2box" style="width: 48%;">
                         <div class="col-md-12 mb-3">
                             <label for="id_username" class="form-label">Username</label>
                             <input type="text" class="form-control form-styleprofile" id="id_username"
-                             name="username" placeholder="Your Username" value="{{form.username.value}}" required>
+                                   name="username" placeholder="Your Username" value="{{form.username.value}}" required>
                         </div>
                         <div class="col-md-12 mb-3">
                             <label for="id_email" class="form-label">Email</label>
                             <input type="email" class="form-control form-styleprofile" id="id_email"
-                             name="email" placeholder="Your Email" value="{{form.email.value}}" required>
+                                   name="email" placeholder="Your Email" value="{{form.email.value}}" required>
                         </div>
                     </div>
                 </div>
@@ -67,7 +67,6 @@
                                             <span class="dadad">Quantity:</span>{{item.quantity}},
                                             <span class="dadad">Price $:{{item.price}}</span><br>
                                             <span class="dadad">Date:</span>{{order.created}}
-
                                         </div>
                                     {% endfor %}
                                 </p>
