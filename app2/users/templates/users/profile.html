@@ -57,11 +57,12 @@
                 {% if orders %}
                     <div class="orderss">
                         {% for order in orders  %}
-                            <div class="order-cart">
+                            <div class="cart-cards d-flex">
                                 <h5 class="order-title">Order № {{order.id}}</h5>
                                 <p class="order-desc">
                                     {% for item in order.items.all  %}
-                                        <div class="orders-carts">
+                                        <div class="cart-card">
+                                            <img src="{{item.product.image.url}}" class="card-img" alt="">
                                             <span class="dadad">Name:</span><a class="" href="{% url "main:product_detail" item.product.slug %}">{{item.product.name}}</a>
                                             <br>
                                             <span class="dadad">Quantity:</span>{{item.quantity}},
