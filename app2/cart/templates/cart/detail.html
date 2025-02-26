@@ -45,10 +45,11 @@
             <h5>Total sum: ${{ cart.get_total_price }}</h5>
         </div>
         <div class="cart-buttons d-flex gap-3">
-            <a href="/shop" class="cart-btn">Continue Shopping</a>
+            <a href="/shop" class="add-to-cart-btn">Continue Shopping</a>
             {% with cart_quantity=cart|length %}
                 {% if cart_quantity > 0 %}
-                    <a href="{% url "orders:order_create" %}" class="cart-btn">Checkout</a>
+                    <a href="{% url "orders:order_create" %}" class="add-to-cart-btn">Checkout 
+                        <span class="material-symbols-outlined">shopping_cart_checkout</span></a>
                 {% endif %}
             {% endwith %}
         </div>
