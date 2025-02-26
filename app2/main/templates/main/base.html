@@ -36,10 +36,10 @@
                             <span class="nav-text">PRODUCTS</span>
                         </a>
                     </li>
-                    <li><a href="#" class="nav-item">
+                    {% comment %} <li><a href="#" class="nav-item">
                         <span class="material-symbols-outlined">local_bar</span>
                         <span class="nav-text">DRINKS</span>
-                    </a></li>
+                    </a></li> {% endcomment %}
                     <li>
                         {% if user.is_authenticated %}
                             <a href="{% url "user:profile" %}" class="nav-item {% if request.resolver_match.url_name == 'profile' %}active{% endif %}">
