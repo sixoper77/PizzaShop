@@ -10,7 +10,7 @@
 <hr>
 
 <div style="display: flex; align-items: center; margin-bottom: 20px;">
-    <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pngwing.com%2Fen%2Fsearch%3Fq%3Ddjango&psig=AOvVaw0rcM1tn3liXZcX3w_bP3m-&ust=1740860553127000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCMD-oomZ54sDFQAAAAAdAAAAABAE" alt="Django Logo" width="150" style="margin-right: 20px;">
+    <img src="https://w7.pngwing.com/pngs/10/113/png-transparent-django-web-development-web-framework-python-software-framework-django-text-trademark-logo.png" alt="Django Logo" width="150" style="margin-right: 20px;">
     <div>
         <h3>What is the application written in?</h3>
         <p>
