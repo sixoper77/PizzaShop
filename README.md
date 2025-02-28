@@ -10,7 +10,7 @@
 <hr>
 
 <div style="display: flex; align-items: center; margin-bottom: 20px;">
-    <img src="https://w7.pngwing.com/pngs/10/113/png-transparent-django-web-development-web-framework-python-software-framework-django-text-trademark-logo.png" alt="Django Logo" width="150" style="margin-right: 20px;">
+    <img src="" alt="Django Logo" width="150" style="margin-right: 20px;">
     <div>
         <h3>What is the application written in?</h3>
         <p>
@@ -23,7 +23,7 @@
 <hr>
 
 <div style="display: flex; align-items: center; margin-bottom: 20px;">
-    <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.cleanpng.com%2Fpng-postgresql-object-relational-database-oracle-datab-6065556%2F&psig=AOvVaw0anViC7bQhc2-yi8uovJXR&ust=1740860750364000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCKDhq-eZ54sDFQAAAAAdAAAAABAE" alt="PostgreSQL" width="200" style="margin-right: 20px;">
+    <img src="https://cdn-icons-png.flaticon.com/512/5968/5968342.png" alt="PostgreSQL" width="200" style="margin-right: 20px;">
     <div>
         <h3>PostgreSQL</h3>
         <p>
