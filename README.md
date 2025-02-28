@@ -63,9 +63,21 @@
 <div style="display: flex; align-items: center; margin-bottom: 20px;">
     <img src="https://cloud.google.com/_static/cloud/images/social-icon-google-cloud-1200-630.png" alt="Google Cloud" width="200" style="margin-right: 20px;">
     <div>
-        <h3>Django Unfold</h3>
+        <h3>Google Cloud Dev Console</h3>
         <p>
             Using Google Cloud was necessary to log in or register via Google
+        </p>
+    </div>
+
+<hr>
+
+</div>
+<div style="display: flex; align-items: center; margin-bottom: 20px;">
+    <img src="https://cdn.iconscout.com/icon/free/png-256/free-stripe-logo-icon-download-in-svg-png-gif-file-formats--flat-social-media-branding-pack-logos-icons-498440.png" alt="Stripe" width="200" style="margin-right: 20px;">
+    <div>
+        <h3>Stripe</h3>
+        <p>
+                I used the Stripe payment gateway to intercept payments and receive money from clients. Also, after the user has paid, the Django admin panel sets True in the Paid column. After the payment is                     completed, the user is sent to a page where it says the payment was successful.
         </p>
     </div>
 </div>
