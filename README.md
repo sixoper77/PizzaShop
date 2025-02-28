@@ -81,3 +81,23 @@
         </p>
     </div>
 </div>
+
+<hr>
+
+<div style="display: flex; align-items: center; margin-bottom: 20px;">
+    <img src="https://cdn.iconscout.com/icon/free/png-256/free-google-fonts-logo-icon-download-in-svg-png-gif-file-formats--font-redesign-2021-brands-pack-logos-icons-2931439.png?f=webp" alt="Stripe" width="200" style="margin-right: 20px;">
+    <div>
+        <h3>Google Fonts and Icons</h3>
+        <p>
+            I used icons and fonts from Google for all sorts of different arrows, because they are beautiful and allow you to build some kind of logic.
+        </p>
+    </div>
+</div>
+![image](https://github.com/user-attachments/assets/40a31de4-df90-4d95-a267-86ef2e547314),![image](https://github.com/user-attachments/assets/61154a32-4123-4e55-8eea-1fb73abfaf39),![image](https://github.com/user-attachments/assets/6611b8e3-c9e8-4b35-bf37-56da3e39e4e5),![image](https://github.com/user-attachments/assets/1418289b-7ff9-4165-9228-a3a823e92853),![image](https://github.com/user-attachments/assets/c22d50f7-a819-47ed-a5fa-b225be110d56),![image](https://github.com/user-attachments/assets/97d07610-3cb1-4aff-a105-99df2d8afcab),![image](https://github.com/user-attachments/assets/3a157b5e-5507-4e87-8d69-a5b86d103659)
+
+
+
+
+
+
+
