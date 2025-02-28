@@ -1,4 +1,5 @@
 <div style="display: flex; align-items: center; margin-bottom: 20px;">
+    <img src="https://lh3.googleusercontent.com/lJt5Q14I3XVD21Gl10xa7XkYYwOevhP_mTowxMWmZrVQ4bCtvTk98n_5bC-JqMgwZ-Su" alt="PostgreSQL" width="200" style="margin-right: 20px;">
     <div>
         <h3>Pizza Shop</h3>
         <p>
@@ -10,7 +11,7 @@
 <hr>
 
 <div style="display: flex; align-items: center; margin-bottom: 20px;">
-    <img src="" alt="Django Logo" width="150" style="margin-right: 20px;">
+    <img src="https://batisteo.gallerycdn.vsassets.io/extensions/batisteo/vscode-django/1.15.0/1703694028504/Microsoft.VisualStudio.Services.Icons.Default" alt="Django Logo" width="150" style="margin-right: 20px;">
     <div>
         <h3>What is the application written in?</h3>
         <p>
