@@ -203,7 +203,9 @@ SOCIALACCOUNT_LOGIN_ON_GET=True
 #обязательный запрос почты
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = "optional"
-ACCOUNT_AUTHENTICATION_METHOD = "username_email"
+ACCOUNT_LOGIN_METHODS = {"username", "email"}
 UNFOLD = {
     "STUDIO": True,  # Включает Studio
 }
+
+
