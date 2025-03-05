@@ -6,18 +6,23 @@ from .forms import UserLoginForm,UserRegistrationForm,ProfileForm
 from django.contrib.auth.decorators import login_required
 from orders.models import Order,OrderItem
 from django.db.models import Prefetch
+from . models import User
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth import update_session_auth_hash
 def login(request):
     if request.method=='POST':
         form=UserLoginForm(data=request.POST)
         if form.is_valid():
             username=request.POST['username']
             password=request.POST['password']
+            
             user=auth.authenticate(username=username,password=password)
             if user:
                 auth.login(request,user)
                 return HttpResponseRedirect(reverse('main:product_list'))
     else:
         form=UserLoginForm()
+    
     return render(request,'users/login.html')
 
 def registration(request):
@@ -25,12 +30,30 @@ def registration(request):
         form = UserRegistrationForm(data=request.POST)
         if form.is_valid():
             user = form.save()
-            auth.login(request, user)
+            backend = 'django.contrib.auth.backends.ModelBackend'
+            # НУЖНО ЕСЛИ ДВА РАЗНЫХ БЕКЕНДА(УКАЗАТЬ БЕК) ДЛЯ РЕГИСТРАЦИИ!!! А Я ДАУН ДВЕ СРАЗУ ОСТАВИЛ И ОСТАВИЛ ВОТ ЕБЕНЬ
+            auth.login(request, user,backend=backend)
             messages.success(request, f'{user.username}, Successful Registration')
             return HttpResponseRedirect(reverse('user:profile'))
     else:
         form = UserRegistrationForm()
     return render(request, 'users/registration.html', {'form': form})
+
+# def change_password(request):
+#     if request.method=='POST':
+#         form=PasswordChangeForm(request.user,request.POST)
+#         if form.is_valid():
+#             user=form.save()
+#             update_session_auth_hash(request,user)
+#             messages.success(request,'Your password was successfully updated!')
+#             return redirect('change_password')
+#         else:
+#             messages.error(request,'Error')
+#     else:
+#         form=PasswordChangeForm(request.user)
+#     return render(request,'users/change_password.html',{
+#         'form':form
+#     })
 
 @login_required
 def profile(request):
