@@ -9,6 +9,13 @@ from django.db.models import Prefetch
 from . models import User
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.views import PasswordChangeView
+class PasswordChangeView(PasswordChangeView):
+    form_class=PasswordChangeForm
+    success_url= '/shop/'
+    
+
+
 def login(request):
     if request.method=='POST':
         form=UserLoginForm(data=request.POST)
@@ -29,7 +36,7 @@ def registration(request):
     if request.method == 'POST':
         form = UserRegistrationForm(data=request.POST)
         if form.is_valid():
-            user = form.save()
+            user = form.save() 
             backend = 'django.contrib.auth.backends.ModelBackend'
             # НУЖНО ЕСЛИ ДВА РАЗНЫХ БЕКЕНДА(УКАЗАТЬ БЕК) ДЛЯ РЕГИСТРАЦИИ!!! А Я ДАУН ДВЕ СРАЗУ ОСТАВИЛ И ОСТАВИЛ ВОТ ЕБЕНЬ
             auth.login(request, user,backend=backend)
