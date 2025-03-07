@@ -208,4 +208,4 @@ UNFOLD = {
     "STUDIO": True,  # Включает Studio
 }
 
-
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
