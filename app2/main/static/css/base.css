@@ -790,3 +790,37 @@ input {
 .red{
     color: red;
 }
+
+.btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px; 
+}
+
+.telegram-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #0088cc;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 6px 12px;
+    border-radius: 20px;
+    text-decoration: none;
+    width: 120px; 
+    height: 45px; 
+    text-align: center;
+    transition: background 0.3s;
+}
+
+.telegram-button:hover {
+    background-color: #007bb5;
+}
+
+.telegram-icon {
+    width: 16px;  
+    height: 16px; 
+    margin-right: 6px;
+}

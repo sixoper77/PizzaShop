@@ -16,20 +16,30 @@
 <body>
     <header class="header">
         <div class="header-container d-flex align-items-center justify-content-between px-4 py-2">
-            <!-- Логотип слева -->
+          
             <div class="logo">
-                <h2 class="m-0">Pizza Shop</h2>
+                <h2 class="m-0">Pizza Shop
+                    <span class="material-symbols-outlined">local_pizza</span>
+                </h2>
             </div>
 
-            <!-- Меню справа -->
+           
             <nav class="header-nav">
                 <ul class="nav-list d-flex align-items-center gap-4 m-0">
+                    <li>
+                        <a href="https://t.me/USERNAME_BOT" target="_blank" class="telegram-button">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram" class="telegram-icon">
+                            ОТКРЫТЬ
+                        </a>
+                    </li>
                     <li>
                         <a href="{% url 'main:popular_list' %}" class="nav-item {% if request.resolver_match.url_name == 'popular_list' %}active{% endif %}">
                             <span class="material-symbols-outlined">home</span>
                             <span class="nav-text">HOME</span>
                         </a>
                     </li>
+                    {% comment %} TELEGRAM BUTTON  {% endcomment %}
+
                     <li>
                         <a href="{% url 'main:product_list' %}" class="nav-item {% if request.resolver_match.url_name == 'product_list' %}active{% endif %}">
                             <span class="material-symbols-outlined">local_pizza</span>
