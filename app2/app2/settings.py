@@ -9,8 +9,10 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
-
+import os
 from pathlib import Path
+from dotenv import load_dotenv
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -77,8 +79,8 @@ SOCIALACCOUNT_PROVIDERS = {
             "email",
         ],
         'APP': {
-            'client_id': '649782090779-aioq4b7kn7bn6g7vrr9g0bq6c68cf468.apps.googleusercontent.com',
-            'secret': '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',
+            'client_id': os.getenv('GOOGLE_CLIENT_ID'),
+            'secret': os.getenv('GOOGLE_SECRET'),
             'key': ''
         }
     },
@@ -89,8 +91,8 @@ SOCIALACCOUNT_PROVIDERS = {
             'read:org',
         ],
         'APP': {
-            'client_id': 'Ov23lizrHeZkJWMX5Q4I',
-            'secret': 'e01736c996c1a5461e6e1c882a078f116109e3fb',
+            'client_id': os.getenv('GITHUB_CLIENT_ID'),
+            'secret': os.getenv('GITHUB_SECRET'),
             'key':''
             
         }
@@ -183,10 +185,10 @@ MEDIA_ROOT=BASE_DIR/'media'
 CART_SESSION_ID='cart'
 
 AUTH_USER_MODEL='users.User'
-STRIPE_PUBLISHABLE_KEY='pk_test_51QrfneGGYzjuAv3nQcZdTlcRn3WbOefPPGUnE9gxMvXeeNaJtgyLjHgRtZLIbSAmEHKelcELiZOzlfw17S5qoGZT0093RC1xsj'
-STRIPE_SECRET_KEY='sk_test_51QrfneGGYzjuAv3nRzt2WsHTDlSGxiHCZRxNa3c5XGouqLvf2DldaVHRSH65bO4Dccqxh5s3YUEbi5rb6ISeL4Sq00KZwBuWLU'
+STRIPE_PUBLISHABLE_KEY=os.getenv('STRIPE_PUBLISHABLE_KEY')
+STRIPE_SECRET_KEY=os.getenv('STRIPE_SECRET_KEY')
 STRIPE_API_VERSION='2022-08-01'
-STRIPE_WEBHOOK_SECRET='whsec_e8349d4811e1ca1b3fa6831c413c5f117e956d2593b557f8a79ae62f63340cfd'
+STRIPE_WEBHOOK_SECRET=os.getenv('STRIPE_WEBHOOK_SECRET')
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
@@ -205,7 +207,7 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = "optional"
 ACCOUNT_LOGIN_METHODS = {"username", "email"}
 UNFOLD = {
-    "STUDIO": True,  # Включает Studio
+    "STUDIO": True,
 }
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
