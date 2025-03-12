@@ -27,6 +27,8 @@ urlpatterns = [
     path('payment/',include('payment.urls',namespace='payment')),
     path('accounts/', include('allauth.urls')),
     path('', include(('main.urls', 'main'), namespace='main')),
+    path('api-auth/', include('rest_framework.urls')),
+    path('api/',include('api.urls',namespace='api')),
     
     
     # СБРОС ПАРОЛЯ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11111
