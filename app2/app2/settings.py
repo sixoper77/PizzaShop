@@ -131,11 +131,11 @@ WSGI_APPLICATION = 'app2.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME':'pizza',
-        'USER':'pizza',
-        'PASSWORD':'pizza',
-        'HOST':'localhost',
-        'PORT':'5432',
+        'NAME':os.getenv('NAME_DATABASE'),
+        'USER':os.getenv('USER_DATABASE'),
+        'PASSWORD':os.getenv('PASSWORD_DATABASE'),
+        'HOST':os.getenv('HOST'),
+        'PORT':os.getenv('PORT'),
     }
 }
 
