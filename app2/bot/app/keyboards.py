@@ -10,7 +10,7 @@ async def categories():
     all_categories= await get_categories()
     keyboard=InlineKeyboardBuilder()
     for category in all_categories:
-        keyboard.row(InlineKeyboardButton(text=f'{category['name']}',callback_data=f'category_{category['slug']}'))
+        keyboard.row(InlineKeyboardButton(text=f"{category['name']}",callback_data=f"category_{category['slug']}"))
     keyboard.row(InlineKeyboardButton(text='На главную',callback_data='start'))
     return keyboard.as_markup()
 
@@ -26,9 +26,10 @@ async def get_items_by_category_slug(category_slug):
     products_by_categories=await get_data(category_slug)
     keyboard=InlineKeyboardBuilder()
     for item in products_by_categories:
-        keyboard.row(InlineKeyboardButton(text=item['name'],callback_data=f'product_{item['id']}'))
+        print(item)
+        keyboard.row(InlineKeyboardButton(text=item['name'],callback_data=f'product_{item['name']}'))
     keyboard.row(InlineKeyboardButton(text='К категориям ',callback_data='category'))
-    
+    return keyboard.as_markup()
 async def back_to_category():
     return InlineKeyboardMarkup(inline_keyboard=[
         [InlineKeyboardButton(text='Назад к категориям', callback_data='category')]
