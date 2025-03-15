@@ -1,6 +1,7 @@
 from aiogram.types import InlineKeyboardMarkup,InlineKeyboardButton
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 from .data import get_data,get_categories
+from aiogram.fsm.context import FSMContext
 menu=InlineKeyboardMarkup(inline_keyboard=[
     [InlineKeyboardButton(text='Категории',callback_data='Category')],
     [InlineKeyboardButton(text='Продукты',callback_data='Products')]
@@ -18,15 +19,15 @@ async def products():
     all_products= await get_data()
     keyboard=InlineKeyboardBuilder()
     for product in all_products:
-        keyboard.row(InlineKeyboardButton(text=product['name'],callback_data=f'product_{product['id']}'))
+        keyboard.row(InlineKeyboardButton(text=product['name'],callback_data=f'product_{product['name']}'))
     keyboard.row(InlineKeyboardButton(text='На главную',callback_data='start'))
     return keyboard.as_markup()
 
-async def get_items_by_category_slug(category_slug):
+async def get_items_by_category_slug(category_slug,state:FSMContext):
     products_by_categories=await get_data(category_slug)
+    await state.update_data(products=products_by_categories)
     keyboard=InlineKeyboardBuilder()
     for item in products_by_categories:
-        print(item)
         keyboard.row(InlineKeyboardButton(text=item['name'],callback_data=f'product_{item['name']}'))
     keyboard.row(InlineKeyboardButton(text='К категориям ',callback_data='category'))
     return keyboard.as_markup()
