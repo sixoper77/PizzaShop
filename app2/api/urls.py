@@ -5,4 +5,8 @@ urlpatterns = [
     path('get-products/<slug:category_slug>/',views.get_products,name='get-products'),
     path('get-products/',views.get_products,name='get-products'),
     path('get_categories/',views.get_categories,name='get_categories'),
+    path('add-to-cart/',views.add_to_cart,name='add-to-cart'),
+    path('show-cart/',views.show_cart,name='show_cart'),
+    path('clear-cart/',views.clear_cart,name='clear_cart'),
+    path('save-telegram-id/',views.save_telegram_id,name='save_telegram_id'),
 ]
