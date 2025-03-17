@@ -59,12 +59,10 @@ async def item(callback: CallbackQuery, state: FSMContext):
     products = data.get('products', [])
 
     try:
-        product_id = int(callback.data.split('_')[1])  # Теперь получаем ID товара
+        product_id = int(callback.data.split('_')[1])
     except ValueError:
         await callback.message.answer("Ошибка! Неверный формат данных.")
         return
-
-    # Находим товар по ID
     product_index = next((i for i, p in enumerate(products) if p["id"] == product_id), None)
     if product_index is None:
         await callback.message.answer("Ошибка! Товар не найден.")
@@ -81,15 +79,11 @@ async def item(callback: CallbackQuery, state: FSMContext):
                 await callback.message.answer("Ошибка загрузки изображения")
                 return
 
-    # Кнопки
-    keyboard_buttons = [[InlineKeyboardButton(text='Назад', callback_data='Category')]]
     
-    # Кнопка "Прошлая пицца", если это не первый товар
+    keyboard_buttons = [[InlineKeyboardButton(text='Назад', callback_data='Category')]]
     if product_index > 0:
         prev_product_id = products[product_index - 1]["id"]
         keyboard_buttons.append([InlineKeyboardButton(text='Прошлая пицца', callback_data=f'product_{prev_product_id}')])
-    
-    # Кнопка "Следующая пицца", если есть следующий товар
     if product_index < len(products) - 1:
         next_product_id = products[product_index + 1]["id"]
         keyboard_buttons.append([InlineKeyboardButton(text='Следующая пицца', callback_data=f'product_{next_product_id}')])
@@ -97,7 +91,6 @@ async def item(callback: CallbackQuery, state: FSMContext):
     keyboard_buttons.append([InlineKeyboardButton(text='🛒 Добавить в корзину', callback_data=f'add_to_cart_{product_id}')])
     keyboard = InlineKeyboardMarkup(inline_keyboard=keyboard_buttons)
 
-    # **Обновляем только медиа (фото + описание)**
     await callback.message.edit_media(
         media=InputMediaPhoto(
             media=BufferedInputFile(image_bytes, filename="product.jpg"),
@@ -105,8 +98,6 @@ async def item(callback: CallbackQuery, state: FSMContext):
         ),
         reply_markup=keyboard
     )
-
-
     
 @router.callback_query(F.data.startswith('next_pizza_'))
 async def next_pizza(callback: CallbackQuery, state: FSMContext):
@@ -114,12 +105,11 @@ async def next_pizza(callback: CallbackQuery, state: FSMContext):
     data = await state.get_data()
     products = data.get('products', [])
     try:
-        index = int(callback.data.split('_')[2]) + 1  # Следующий индекс
+        index = int(callback.data.split('_')[2]) + 1
     except ValueError:
         await callback.message.answer("Ошибка! Неверный формат данных.")
         return
-
-    if index < len(products):  # Проверяем, есть ли следующая пицца
+    if index < len(products):  
         product = products[index]
         image_url = product.get("image_url")
         async with aiohttp.ClientSession() as session:
@@ -136,8 +126,6 @@ async def next_pizza(callback: CallbackQuery, state: FSMContext):
             [InlineKeyboardButton(text='Прошлая пицца', callback_data=f'back_pizza_{index}')],
             [InlineKeyboardButton(text='Добавить в корзину', callback_data='Cart')]
         ])
-
-        # **Редактируем фото вместо отправки нового сообщения**
         await callback.message.edit_media(
             media=InputMediaPhoto(
                 media=BufferedInputFile(image_bytes, filename="product.jpg"),
@@ -155,12 +143,11 @@ async def back_pizza(callback: CallbackQuery, state: FSMContext):
     products = data.get('products', [])
     print(products)
     try:
-        index = int(callback.data.split('_')[2]) - 1  # Переход к предыдущей пицце
+        index = int(callback.data.split('_')[2]) - 1
     except ValueError:
         await callback.message.answer("Ошибка! Неверный формат данных.")
         return
-
-    if index >= 0:  # Проверяем, есть ли предыдущая пицца
+    if index >= 0:
         product = products[index]
         image_url = product.get("image_url")
 
@@ -178,8 +165,6 @@ async def back_pizza(callback: CallbackQuery, state: FSMContext):
             [InlineKeyboardButton(text='Следующая пицца', callback_data=f'next_pizza_{index}')],
             [InlineKeyboardButton(text='Добавить в корзину', callback_data='Cart')]
         ])
-
-        # **Редактируем фото вместо отправки нового сообщения**
         await callback.message.edit_media(
             media=InputMediaPhoto(
                 media=BufferedInputFile(image_bytes, filename="product.jpg"),
@@ -188,7 +173,7 @@ async def back_pizza(callback: CallbackQuery, state: FSMContext):
             reply_markup=keyboard
         )
     else:
-        await callback.answer("Это первая пицца!")  # Исправил сообщение
+        await callback.answer("Это первая пицца!") 
 
 @router.callback_query(F.data.startswith('add_to_cart_'))
 async def add_cart(callback:CallbackQuery,state:FSMContext):
