@@ -6,6 +6,7 @@ class User(AbstractUser):
     image=models.ImageField(upload_to='users_image',
                             blank=True,
                             null=True)
+    telegram_id=models.BigIntegerField(unique=True,null=True,blank=True)
     class Meta:
         db_table='user'
         

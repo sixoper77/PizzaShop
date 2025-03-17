@@ -7,15 +7,13 @@ from django.contrib.auth.decorators import login_required
 from orders.models import Order,OrderItem
 from django.db.models import Prefetch
 from . models import User
-from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth.forms import PasswordChangeForm,PasswordResetForm
 from django.contrib.auth import update_session_auth_hash
-from django.contrib.auth.views import PasswordChangeView
+from django.contrib.auth.views import PasswordChangeView,PasswordResetView
 class PasswordChangeView(PasswordChangeView):
     form_class=PasswordChangeForm
     success_url= '/shop/'
     
-
-
 def login(request):
     if request.method=='POST':
         form=UserLoginForm(data=request.POST)
@@ -38,29 +36,13 @@ def registration(request):
         if form.is_valid():
             user = form.save() 
             backend = 'django.contrib.auth.backends.ModelBackend'
-            # НУЖНО ЕСЛИ ДВА РАЗНЫХ БЕКЕНДА(УКАЗАТЬ БЕК) ДЛЯ РЕГИСТРАЦИИ!!! А Я ДАУН ДВЕ СРАЗУ ОСТАВИЛ И ОСТАВИЛ ВОТ ЕБЕНЬ
+            # НУЖНО ЕСЛИ ДВА РАЗНЫХ БЕКЕНДА(УКАЗАТЬ БЕК) ДЛЯ РЕГИСТРАЦИИ!!! А Я ДАУН ДВЕ СРАЗУ ОСТАВИЛ ВОТ ЕБЕНЬ
             auth.login(request, user,backend=backend)
             messages.success(request, f'{user.username}, Successful Registration')
             return HttpResponseRedirect(reverse('user:profile'))
     else:
         form = UserRegistrationForm()
     return render(request, 'users/registration.html', {'form': form})
-
-# def change_password(request):
-#     if request.method=='POST':
-#         form=PasswordChangeForm(request.user,request.POST)
-#         if form.is_valid():
-#             user=form.save()
-#             update_session_auth_hash(request,user)
-#             messages.success(request,'Your password was successfully updated!')
-#             return redirect('change_password')
-#         else:
-#             messages.error(request,'Error')
-#     else:
-#         form=PasswordChangeForm(request.user)
-#     return render(request,'users/change_password.html',{
-#         'form':form
-#     })
 
 @login_required
 def profile(request):
