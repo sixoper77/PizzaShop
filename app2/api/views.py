@@ -13,7 +13,6 @@ def get_products(request,category_slug=None):
         products = Products.objects.filter(category=category)
         serializer=ProductsSerializer(products,many=True,context={'request':request})
     else:
-        # products=Products.objects.all()
         serializer=ProductsSerializer(Products.objects.all(),many=True,context={'request':request})
     return Response(serializer.data)
 
@@ -25,21 +24,22 @@ def get_categories(request):
 
 @api_view(['POST'])
 def add_to_cart(request):
+    telegram_id=request.query_params.get('telegram_id')
     product_id = request.data.get('product_id')
     quantity = request.data.get('quantity', 1)
     product = get_object_or_404(Products, id=product_id)
     
-    cart = Cart(request)
+    cart = Cart(request,telegram_id=telegram_id)
     cart.add(product=product, quantity=int(quantity))
-    
-    # Округление цены без потерь
+    request.session.save()
     total_price = Decimal(cart.get_total_price()).quantize(Decimal('0.01'))
 
     return Response({'message': 'Товары добавлены в корзину', 'cart_total': str(total_price)})
 
 @api_view(['GET'])
 def show_cart(request):
-    cart = Cart(request)
+    telegram_id=request.query_params.get('telegram_id')
+    cart = Cart(request,telegram_id=telegram_id)
     serialized_items = []
     for item in cart:
         product = item['product']
@@ -56,7 +56,8 @@ def show_cart(request):
 
 @api_view(['GET','POST'])
 def clear_cart(request):
-    cart=Cart(request)
+    telegram_id=request.query_params.get('telegram_id')
+    cart=Cart(request,telegram_id=telegram_id)
     cart.clear()
     return Response({'message':'корзина очищена'})
 
