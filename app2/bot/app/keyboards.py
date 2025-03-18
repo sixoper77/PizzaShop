@@ -24,7 +24,8 @@ async def products():
         keyboard.row(InlineKeyboardButton(text=product['name'], callback_data=f"product_{product['id']}"))
 
     keyboard.row(InlineKeyboardButton(text='На главную', callback_data='start'))
-    keyboard.row(InlineKeyboardButton(text='Добавить в корзину', callback_data=f'add_to_cart{product['id']}'))
+    # keyboard.row(InlineKeyboardButton(text='Добавить в корзину', callback_data=f'add_to_cart{product['id']}'))
+    
 
     return keyboard.as_markup()
 
@@ -35,13 +36,11 @@ async def get_items_by_category_slug(category_slug,state:FSMContext):
     for index,item in enumerate(products_by_categories):
         keyboard.row(InlineKeyboardButton(text=item['name'],callback_data=f'product_{item['id']}'))
     keyboard.row(InlineKeyboardButton(text='К категориям ',callback_data='Category'))
-    keyboard.row(InlineKeyboardButton(text='Добавить в корзину', callback_data=f'add_to_cart_{item['id']}'))
+    # keyboard.row(InlineKeyboardButton(text='Добавить в корзину', callback_data=f'add_to_cart_{item['id']}'))
+    keyboard.row(InlineKeyboardButton(text='Просмотреть корзину', callback_data='show_cart'))
+    keyboard.row(InlineKeyboardButton(text='Почистить корзину', callback_data='clear_cart'))
     return keyboard.as_markup()
 async def back_to_category():
     return InlineKeyboardMarkup(inline_keyboard=[
         [InlineKeyboardButton(text='Назад к категориям', callback_data='category')]
     ])
-back=InlineKeyboardMarkup(inline_keyboard=[
-                          [InlineKeyboardButton(text='back',callback_data='start')],    
-                          [InlineKeyboardButton(text='Next pizza',callback_data='next_pizza')],    
-                          [InlineKeyboardButton(text='Add to cart',callback_data='Cart')]])    

@@ -15,21 +15,28 @@ async def get_categories():
         async with session.get(url) as resp:
             data=await resp.json()
     return data
-async def add_to_cart(cart):
+
+async def add_to_cart(cart,user_id=None):
     url='http://127.0.0.1:8000/api/add-to-cart/'
+    if user_id:
+        url+=f'?telegram_id={user_id}'
     async with aiohttp.ClientSession() as session:
         async with session.post(url,json=cart) as resp:
             answer=await resp.json()
     return answer
 
-async def clear_cart():
+async def clear_cart(user_id=None):
     url='http://127.0.0.1:8000/api/clear-cart/'
+    if user_id:
+        url+=f'?telegram_id={user_id}'
     async with aiohttp.ClientSession() as session:
         async with session.post(url) as resp:
             return await resp.json()
     
-async def show_cart():
+async def show_cart(user_id=None):
     url='http://127.0.0.1:8000/api/show-cart/'
+    if user_id:
+        url+=f'?telegram_id={user_id}'
     async with aiohttp.ClientSession() as session:
         async with session.get(url) as resp:
             return await resp.json()

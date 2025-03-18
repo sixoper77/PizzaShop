@@ -9,14 +9,12 @@ from aiogram.types import CallbackQuery, BufferedInputFile
 from aiogram.fsm.context import FSMContext
 from aiogram.types import InlineKeyboardMarkup,InlineKeyboardButton
 from aiogram.types import InputMediaPhoto
-from .data import add_to_cart,show_cart,save_telegram_id
+from .data import add_to_cart,show_cart,save_telegram_id,clear_cart
 router = Router()
-
-
 
 @router.message(CommandStart())
 async def command_start(message: Message):
-    await message.answer('Hello', reply_markup=kb.menu)
+    await message.answer('Привет дружище,это тест бот.\nАвтор данного треша- @sixoper77', reply_markup=kb.menu)
     user_id=message.from_user.id
     username=message.from_user.username or f'tg_{user_id}'
     print(user_id)
@@ -89,12 +87,14 @@ async def item(callback: CallbackQuery, state: FSMContext):
         keyboard_buttons.append([InlineKeyboardButton(text='Следующая пицца', callback_data=f'product_{next_product_id}')])
 
     keyboard_buttons.append([InlineKeyboardButton(text='🛒 Добавить в корзину', callback_data=f'add_to_cart_{product_id}')])
+    keyboard_buttons.append([InlineKeyboardButton(text='Просмотреть корзину', callback_data='show_cart')])
+    keyboard_buttons.append([InlineKeyboardButton(text='Почистить корзину', callback_data='clear_cart')])
     keyboard = InlineKeyboardMarkup(inline_keyboard=keyboard_buttons)
 
     await callback.message.edit_media(
         media=InputMediaPhoto(
             media=BufferedInputFile(image_bytes, filename="product.jpg"),
-            caption=f"🛒 {product['name']}\n💰 Цена: {product['price']} грн \nСостав: {product['description']}"
+            caption=f"🛒 {product['name']}\n💰 Цена: {product['price']}$ \nСостав: {product['description']}"
         ),
         reply_markup=keyboard
     )
@@ -124,12 +124,15 @@ async def next_pizza(callback: CallbackQuery, state: FSMContext):
             [InlineKeyboardButton(text='Назад', callback_data='Category')],
             [InlineKeyboardButton(text='Следующая пицца', callback_data=f'next_pizza_{index}')],
             [InlineKeyboardButton(text='Прошлая пицца', callback_data=f'back_pizza_{index}')],
-            [InlineKeyboardButton(text='Добавить в корзину', callback_data='Cart')]
+            [InlineKeyboardButton(text='Добавить в корзину', callback_data=f'add_to_cart_{product['id']}')],
+            [InlineKeyboardButton(text='Просмотреть корзину', callback_data='show_cart')],
+            [InlineKeyboardButton(text='Почистить корзину', callback_data='clear_cart')]
+            
         ])
         await callback.message.edit_media(
             media=InputMediaPhoto(
                 media=BufferedInputFile(image_bytes, filename="product.jpg"),
-                caption=f"🛒 {product['name']}\n💰 Цена: {product['price']} грн\n Состав:{product['description']}"
+                caption=f"🛒 {product['name']}\n💰 Цена: {product['price']}$\n Состав:{product['description']}"
             ),
             reply_markup=keyboard
         )
@@ -163,12 +166,14 @@ async def back_pizza(callback: CallbackQuery, state: FSMContext):
             [InlineKeyboardButton(text='Назад', callback_data='Category')],
             [InlineKeyboardButton(text='Прошлая пицца', callback_data=f'back_pizza_{index}')] if index > 0 else [],
             [InlineKeyboardButton(text='Следующая пицца', callback_data=f'next_pizza_{index}')],
-            [InlineKeyboardButton(text='Добавить в корзину', callback_data='Cart')]
+            [InlineKeyboardButton(text='Добавить в корзину', callback_data=f'add_to_cart_{product['id']}')],
+            [InlineKeyboardButton(text='Просмотреть корзину', callback_data='show_cart')],
+            [InlineKeyboardButton(text='Почистить корзину', callback_data='clear_cart')]
         ])
         await callback.message.edit_media(
             media=InputMediaPhoto(
                 media=BufferedInputFile(image_bytes, filename="product.jpg"),
-                caption=f"🛒 {product['name']}\n💰 Цена: {product['price']} грн \nСостав:{product['description']}"
+                caption=f"🛒 {product['name']}\n💰 Цена: {product['price']}$ \nСостав:{product['description']}"
             ),
             reply_markup=keyboard
         )
@@ -178,6 +183,7 @@ async def back_pizza(callback: CallbackQuery, state: FSMContext):
 @router.callback_query(F.data.startswith('add_to_cart_'))
 async def add_cart(callback:CallbackQuery,state:FSMContext):
     await callback.answer('')
+    user_id=callback.from_user.id
     print(f"callback.data: {callback.data}") 
     product_id=int(callback.data[12:])
     print(product_id)
@@ -188,13 +194,30 @@ async def add_cart(callback:CallbackQuery,state:FSMContext):
         await callback.answer('Товара нет звони мне в телефон!!!')
         return
     print(f"Добавляем в корзину: {product}")
-    succes=await add_to_cart({'product_id':product_id,'quantity':1})
-    show=await show_cart()
-    print(show)
+    succes=await add_to_cart({'product_id':product_id,'quantity':1,'telegram_id':user_id},user_id)
+    show=await show_cart(user_id)
     print(succes)
+    print(show)
+
     if succes:
         await callback.answer('Товар добавлен в корзину')
         
+@router.callback_query(F.data.startswith('clear_cart'))
+async def clear_user_cart(callback:CallbackQuery):
+    await callback.answer('')
+    user_id=callback.from_user.id
+    await clear_cart(user_id)
+    show=await show_cart(user_id)
+    await callback.message.answer('Корзина была очищена\nВНИМАНИЕ ВАША КОРЗИНА ХРАНИТСЯ ЧАС ЕСЛИ ВЫ НИЧЕГО НЕ КУПИЛИ!,\nХРАНИТСЯ ЧАС!',
+                                  reply_markup=kb.menu)
 
-    
-    
+@router.callback_query(F.data.startswith('show_cart'))
+async def show(callback:CallbackQuery):
+    await callback.answer('')
+    user_id=callback.from_user.id
+    show=await show_cart(user_id)
+    messge_text='Ваша корзина:\n'
+    for i in show['cart']:
+        messge_text+=f'{i['name']} - {i['quantity']}шт. price: {i['total_price']}$\n'
+    messge_text+=f'Итог: {show['total_price']}$'
+    await callback.message.answer(messge_text,reply_markup=kb.menu)
