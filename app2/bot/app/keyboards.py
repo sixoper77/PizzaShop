@@ -39,6 +39,7 @@ async def get_items_by_category_slug(category_slug,state:FSMContext):
     # keyboard.row(InlineKeyboardButton(text='Добавить в корзину', callback_data=f'add_to_cart_{item['id']}'))
     keyboard.row(InlineKeyboardButton(text='Просмотреть корзину', callback_data='show_cart'))
     keyboard.row(InlineKeyboardButton(text='Почистить корзину', callback_data='clear_cart'))
+    keyboard.row(InlineKeyboardButton(text='Создать ордер', callback_data='create_order'))
     return keyboard.as_markup()
 async def back_to_category():
     return InlineKeyboardMarkup(inline_keyboard=[

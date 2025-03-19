@@ -41,6 +41,29 @@ async def show_cart(user_id=None):
         async with session.get(url) as resp:
             return await resp.json()
         
+async def save_telegram_order(order, user_id=None):
+    url = 'http://127.0.0.1:8000/api/save-telegram-order/'
+    if user_id:
+        url += f'?telegram_id={user_id}'
+    
+    async with aiohttp.ClientSession() as session:
+        try:
+            async with session.post(url, json=order) as resp:
+                if resp.status == 200:
+                    return await resp.json()
+                else:
+                    try:
+                        error_json = await resp.json()
+                        print(f"Ошибка API: {resp.status}. JSON: {error_json}")
+                        return {"status": "error", "message": error_json}
+                    except:
+                        error_text = await resp.text()
+                        print(f"Ошибка API: {resp.status}. Ответ: {error_text}")
+                        return {"status": "error", "message": f"Ошибка API: {resp.status}"}
+        except Exception as e:
+            print(f"Ошибка запроса: {e}")
+            return {"status": "error", "message": f"Ошибка соединения: {str(e)}"}
+        
 async def save_telegram_id(telegram_id,username):
     url='http://127.0.0.1:8000/api/save-telegram-id/'
     async with aiohttp.ClientSession() as session:
