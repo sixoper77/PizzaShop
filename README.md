@@ -116,13 +116,15 @@
             I used aiogram to transfer my website to a telegram bot, as it is currently very popular and modern.
         </p>
     </div>
+<hr>
+    
 </div>
 <div style="display: flex; align-items: center; margin-bottom: 20px;">
-    <img src="https://kinsta.com/wp-content/uploads/2023/04/aiohttp.png" alt="aiogram" width="200" style="margin-right: 20px;">
+    <img src="https://docs.aiohttp.org/en/stable/_static/aiohttp-plain.svg" alt="aiogram" width="200" style="margin-right: 20px;">
     <div>
-        <h3>Django REST Framework(DRF)</h3>
+        <h3>Aiohttp</h3>
         <p>
-            I used aiogram to transfer my website to a telegram bot, as it is currently very popular and modern.
+            Using aiohttp allows you to make requests in an asynchronous order, without interrupting the flow. This allows you to make high performance applications.
         </p>
     </div>
 </div>
