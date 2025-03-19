@@ -94,6 +94,39 @@
     </div>
 </div>
 
+<hr>
+
+<div style="display: flex; align-items: center; margin-bottom: 20px;">
+    <img src="https://www.django-rest-framework.org/img/logo.png" alt="DRF" width="200" style="margin-right: 20px;">
+    <div>
+        <h3>Django REST Framework(DRF)</h3>
+        <p>
+            I used DRF to create an API to interact between the database and the user in Telegram.
+        </p>
+    </div>
+</div>
+
+<hr>
+
+<div style="display: flex; align-items: center; margin-bottom: 20px;">
+    <img src="https://aiogram.dev/assets/images/aiogram-logo.svg" alt="aiogram" width="200" style="margin-right: 20px;">
+    <div>
+        <h3>Aiogram</h3>
+        <p>
+            I used aiogram to transfer my website to a telegram bot, as it is currently very popular and modern.
+        </p>
+    </div>
+</div>
+<div style="display: flex; align-items: center; margin-bottom: 20px;">
+    <img src="https://kinsta.com/wp-content/uploads/2023/04/aiohttp.png" alt="aiogram" width="200" style="margin-right: 20px;">
+    <div>
+        <h3>Django REST Framework(DRF)</h3>
+        <p>
+            I used aiogram to transfer my website to a telegram bot, as it is currently very popular and modern.
+        </p>
+    </div>
+</div>
+
 
 ![image](https://github.com/user-attachments/assets/1367a378-2ae0-4cb9-ad0b-848f26a5cb0d)
 ![image](https://github.com/user-attachments/assets/61154a32-4123-4e55-8eea-1fb73abfaf39)
