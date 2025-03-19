@@ -3,9 +3,10 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from main.models import Products,Category
 from cart.cart import Cart
-from .serializers import ProductsSerializer,CategorySerializer,CartSerializer
+from .serializers import ProductsSerializer,CategorySerializer,CartSerializer,OrderItemSerializer,OrderSerializer
 from users.models import User
 from decimal import Decimal
+from orders.models import Order,OrderItem
 @api_view(['GET'])
 def get_products(request,category_slug=None):
     if category_slug:
@@ -70,3 +71,47 @@ def save_telegram_id(request):
     else:
         user,created=User.objects.get_or_create(telegram_id=telegram_id,defaults={'username':username})
     return Response({'message:':'Telegram id сохранен','id':user.id})
+
+@api_view(['POST'])
+def order(request):
+    telegram_id = request.query_params.get('telegram_id')
+    if not telegram_id:
+        return Response({"error": "Не указан telegram_id"}, status=400)
+    cart = Cart(request=None, telegram_id=telegram_id)
+    if not cart.cart:
+        return Response({"error": "Корзина пуста"}, status=400)
+    order_data = {
+        'user': request.data.get('user'),
+        'first_name': request.data.get('first_name'),
+        'last_name': request.data.get('last_name'),
+        'email': request.data.get('email'),
+        'city': request.data.get('city'),
+        'address': request.data.get('address'),
+        'postal_code': request.data.get('postal_code'),
+    }
+    
+    order_serializer = OrderSerializer(data=order_data)
+    if order_serializer.is_valid():
+        order = order_serializer.save()
+    else:
+        return Response(order_serializer.errors, status=400)
+    order_items = []
+    for item in cart:
+        order_item = {
+            "order": order.id,
+            "product": item["product"].id,
+            "price": item["price"],
+            "quantity": item["quantity"]
+        }
+        order_items.append(order_item)
+    order_item_serializer = OrderItemSerializer(data=order_items, many=True)
+    if order_item_serializer.is_valid():
+        order_item_serializer.save()
+    else:
+        order.delete()
+        return Response(order_item_serializer.errors, status=400)
+    cart.clear()
+    
+    return Response({"order_id": order.id, "status": "success"})
+    
+    

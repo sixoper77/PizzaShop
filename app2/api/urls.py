@@ -9,4 +9,5 @@ urlpatterns = [
     path('show-cart/',views.show_cart,name='show_cart'),
     path('clear-cart/',views.clear_cart,name='clear_cart'),
     path('save-telegram-id/',views.save_telegram_id,name='save_telegram_id'),
+    path('save-telegram-order/',views.order,name='save_telegram_order'),
 ]
