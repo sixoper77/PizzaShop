@@ -4,7 +4,7 @@ from django.core.cache import cache
 from main.models import Products
 
 class Cart:
-    def __init__(self, request, telegram_id=None):
+    def __init__(self, request=None, telegram_id=None):
         self.request = request
         
         if telegram_id:
@@ -15,7 +15,7 @@ class Cart:
             if not cached_cart:
                 cached_cart = {}
             self.cart = cached_cart
-        else:
+        elif request is not None:
             # Обычная логика для веб-пользователей
             self.session = request.session
             self.cart_key = settings.CART_SESSION_ID
@@ -23,6 +23,9 @@ class Cart:
             if not cart:
                 self.session[self.cart_key] = {}
             self.cart = self.session[self.cart_key]
+        else:
+            # Пустая корзина, если нет ни request, ни telegram_id
+            self.cart = {}
     
     def add(self, product, quantity=1, override_quantity=False):
         product_id = str(product.id)
