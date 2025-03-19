@@ -7,6 +7,11 @@ from .serializers import ProductsSerializer,CategorySerializer,CartSerializer,Or
 from users.models import User
 from decimal import Decimal
 from orders.models import Order,OrderItem
+import stripe
+import os
+from dotenv import load_dotenv
+load_dotenv()
+stripe.api_key=os.getenv('STRIPE_SECRET_KEY')
 @api_view(['GET'])
 def get_products(request,category_slug=None):
     if category_slug:
@@ -55,7 +60,7 @@ def show_cart(request):
 
     return Response({'cart': serialized_items, 'total_price': cart.get_total_price()})
 
-@api_view(['GET','POST'])
+@api_view(['POST'])
 def clear_cart(request):
     telegram_id=request.query_params.get('telegram_id')
     cart=Cart(request,telegram_id=telegram_id)
@@ -114,4 +119,39 @@ def order(request):
     
     return Response({"order_id": order.id, "status": "success"})
     
+@api_view(['POST'])
+def create_cheskout_session_telegram(request):
+    try:
+        order_id = request.data.get('order_id')
+        order = Order.objects.get(id=order_id)
     
+        success_url = f"https://t.me/PizzaShop77_bot?start=payment_success_{order_id}"
+        cancel_url = f"https://t.me/PizzaShop77_bot?start=payment_cancelled_{order_id}"
+        session_data = {
+            'mode': 'payment',
+            'client_reference_id': order_id,
+            'success_url': success_url,
+            'cancel_url': cancel_url,
+            'line_items': []
+        }
+        
+        for item in OrderItem.objects.filter(order=order):
+            discounted_price = item.product.sell_price()
+            session_data['line_items'].append({
+                'price_data': {
+                    'unit_amount': int(discounted_price * Decimal('100')),
+                    'currency': 'usd',
+                    'product_data': {
+                        'name': item.product.name,
+                    },
+                },
+                'quantity': item.quantity,
+            })
+        session = stripe.checkout.Session.create(**session_data)
+        return Response({'stripe_url':session.url})
+    except stripe.error.StripeError as e:
+        return Response({'error': str(e)}, status=400)
+    except Order.DoesNotExist:
+        return Response({'error': 'Order not found'}, status=404)
+    except Exception as e:
+        return Response({'error': str(e)}, status=500)

@@ -1,9 +1,7 @@
 from rest_framework import serializers
 from main.models import Products,Category
-from cart.cart import Cart
 from users.models import User
 from orders.models import Order, OrderItem
-
 class ProductsSerializer(serializers.ModelSerializer):
     image_url=serializers.SerializerMethodField()
     class Meta:
@@ -42,3 +40,4 @@ class OrderItemSerializer(serializers.ModelSerializer):
     class Meta:
         model=OrderItem
         fields='__all__'
+        
