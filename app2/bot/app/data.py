@@ -68,5 +68,19 @@ async def save_telegram_id(telegram_id,username):
     url='http://127.0.0.1:8000/api/save-telegram-id/'
     async with aiohttp.ClientSession() as session:
         async with session.post(url,json={'telegram_id':telegram_id,'username':username}) as resp:
-            return await resp.json()        
+            return await resp.json()    
+async def checkout_telegram(order_id):
+    url = 'http://127.0.0.1:8000/api/create-checkout-session-telegram'
+    async with aiohttp.ClientSession() as session:
+        try:
+            async with session.post(url, json={'order_id': order_id}) as response:
+                if response.status == 200:
+                    return await response.json()
+                else:
+                    error_text = await response.text()
+                    print(f"Ошибка от сервера: {error_text}")
+                    return {'error': 'Ошибка при создании платежа'}
+        except Exception as e:
+            print(f"Ошибка при запросе: {str(e)}")
+            return {'error': str(e)}
 

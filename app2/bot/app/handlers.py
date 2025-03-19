@@ -9,7 +9,7 @@ from aiogram.types import CallbackQuery, BufferedInputFile
 from aiogram.fsm.context import FSMContext
 from aiogram.types import InlineKeyboardMarkup,InlineKeyboardButton
 from aiogram.types import InputMediaPhoto
-from .data import add_to_cart,show_cart,save_telegram_id,clear_cart,save_telegram_order
+from .data import add_to_cart,show_cart,save_telegram_id,clear_cart,save_telegram_order,checkout_telegram
 from .state import *
 router = Router()
 
@@ -321,6 +321,7 @@ async def confirm_order(callback: CallbackQuery, state: FSMContext):
     try:
         response = await save_telegram_order(order=order_state, user_id=user_id)
         if response.get("status") == "success":
+            kb.menu.inline_keyboard.append([InlineKeyboardButton(text='Оплатить', callback_data=f'pay_order_{response['order_id']}')])
             await callback.message.answer(
                 f"✅ Ваш заказ успешно создан! Номер заказа: {response['order_id']}",
                 reply_markup=kb.menu
@@ -347,4 +348,16 @@ async def confirm_order(callback: CallbackQuery, state: FSMContext):
 async def cancel_order(callback: CallbackQuery, state: FSMContext):
     await callback.answer('')
     await callback.message.answer("Заказ отменен", reply_markup=kb.menu)
+    
+@router.callback_query(F.data.startswith('pay_order_'))
+async def pay(callback:CallbackQuery,state:FSMContext):
+    await callback.answer('')
+    order_id=callback.data[10:]
+    data=await checkout_telegram(order_id)
+    await callback.message.answer(
+                f"Ссылка для оплаты: {data['stripe_url']}",
+                
+            )
+    if data:
+        await callback.message.answer('Оплата успешно прошла!\nТовар в пути')
     
