@@ -11,4 +11,5 @@ urlpatterns = [
     path('save-telegram-id/',views.save_telegram_id,name='save_telegram_id'),
     path('save-telegram-order/',views.order,name='save_telegram_order'),
     path('create-checkout-session-telegram',views.create_cheskout_session_telegram,name='create_cheskout_session_telegram'),
+
 ]

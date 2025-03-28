@@ -93,6 +93,7 @@ def order(request):
         'city': request.data.get('city'),
         'address': request.data.get('address'),
         'postal_code': request.data.get('postal_code'),
+        'telegram_id': telegram_id or '',
     }
     
     order_serializer = OrderSerializer(data=order_data)
@@ -132,7 +133,8 @@ def create_cheskout_session_telegram(request):
             'client_reference_id': order_id,
             'success_url': success_url,
             'cancel_url': cancel_url,
-            'line_items': []
+            'line_items': [],
+            
         }
         
         for item in OrderItem.objects.filter(order=order):
