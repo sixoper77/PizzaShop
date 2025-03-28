@@ -16,7 +16,7 @@ router = Router()
 
 @router.message(CommandStart())
 async def command_start(message: Message):
-    await message.answer('Привет дружище,это тест бот.\nАвтор данного треша- @sixoper77', reply_markup=kb.menu)
+    await message.answer('Привет,это тест бот.\nАвтор данного треша- @sixoper77', reply_markup=kb.menu)
     user_id=message.from_user.id
     username=message.from_user.username or f'tg_{user_id}'
     print(user_id)
@@ -200,9 +200,8 @@ async def add_cart(callback:CallbackQuery,state:FSMContext):
         return
     print(f"Добавляем в корзину: {product}")
     succes=await add_to_cart({'product_id':product_id,'quantity':1,'telegram_id':user_id},user_id)
-    show=await show_cart(user_id)
+    # show=await show_cart(user_id)
     print(succes)
-    print(show)
 
     if succes:
         await callback.answer('Товар добавлен в корзину')
@@ -355,9 +354,7 @@ async def pay(callback:CallbackQuery,state:FSMContext):
     order_id=callback.data[10:]
     data=await checkout_telegram(order_id)
     await callback.message.answer(
-                f"Ссылка для оплаты: {data['stripe_url']}",
+                f"Ссылка для оплаты:\n{data['stripe_url']}",
                 
             )
-    if data:
-        await callback.message.answer('Оплата успешно прошла!\nТовар в пути')
     
