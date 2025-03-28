@@ -4,57 +4,60 @@
 {% block title %}Create Order{% endblock title %}
 
 {% block content %}
-    <div class="forcreate">
-        <div class="profile bg-white p-4 mb-4 mx-2">
-            <h2 class="mb-2">Create Order</h2>
-            <form action="" method="post" class="order-form">
+    <div class="checkout-container d-flex justify-content-center">
+        <div class="order-form-container bg-white p-4 shadow rounded">
+            <h2 class="mb-3 text-center">Create Order</h2>
+            <form action="" method="post">
                 {% csrf_token %}
                 
-                <div class="col-mb-12 mb-3">
+                <div class="mb-3">
                     <label for="id_first_name" class="form-label">First Name</label>
-                    <input type="text" class="form-control form-styleprofile" id="id_first_name" name="first_name" placeholder="Your First Name" value="{{ form.first_name.value|default:'' }}" required>
+                    <input type="text" class="form-control" id="id_first_name" name="first_name" placeholder="Your First Name" value="{{ form.first_name.value|default:'' }}" required>
                 </div>
 
-                <div class="col-mb-12 mb-3">
+                <div class="mb-3">
                     <label for="id_last_name" class="form-label">Last Name</label>
-                    <input type="text" class="form-control form-styleprofile" id="id_last_name" name="last_name" placeholder="Your Last Name" value="{{ form.last_name.value|default:'' }}" required>
+                    <input type="text" class="form-control" id="id_last_name" name="last_name" placeholder="Your Last Name" value="{{ form.last_name.value|default:'' }}" required>
                 </div>
 
-                <div class="col-mb-12 mb-3">
+                <div class="mb-3">
                     <label for="id_email" class="form-label">Email</label>
-                    <input type="email" class="form-control form-styleprofile" id="id_email" name="email" placeholder="Your Email" value="{{ form.email.value|default:'' }}" required>
+                    <input type="email" class="form-control" id="id_email" name="email" placeholder="Your Email" value="{{ form.email.value|default:'' }}" required>
                 </div>
 
-                <div class="col-mb-12 mb-3">
+                <div class="mb-3">
                     <label for="id_address" class="form-label">Address</label>
-                    <input type="text" class="form-control form-styleprofile" id="id_address" name="address" placeholder="Your Address" value="{{ form.address.value|default:'' }}" required>
+                    <input type="text" class="form-control" id="id_address" name="address" placeholder="Your Address" value="{{ form.address.value|default:'' }}" required>
                 </div>
 
-                <div class="col-mb-12 mb-3">
+                <div class="mb-3">
                     <label for="id_postal_code" class="form-label">Postal Code</label>
-                    <input type="text" class="form-control form-styleprofile" id="id_postal_code" name="postal_code" placeholder="Your Postal Code" value="{{ form.postal_code.value|default:'' }}" required>
+                    <input type="text" class="form-control" id="id_postal_code" name="postal_code" placeholder="Your Postal Code" value="{{ form.postal_code.value|default:'' }}" required>
                 </div>
 
-                <div class="col-mb-12 mb-3">
+                <div class="mb-3">
                     <label for="id_city" class="form-label">City</label>
-                    <input type="text" class="form-control form-styleprofile" id="id_city" name="city" placeholder="Your City" value="{{ form.city.value|default:'' }}" required>
+                    <input type="text" class="form-control" id="id_city" name="city" placeholder="Your City" value="{{ form.city.value|default:'' }}" required>
                 </div>
 
-                <p><input type="submit" value="Place Order" class="btn btn-primary"></p>
+                <button type="submit" class="btn btn-primary w-100">Place Order
+                    <span class="material-symbols-outlined">arrow_right_alt</span>
+                </button>
             </form>
         </div>
 
-        <div class="checkout">
-            <h1>Checkout</h1>
-            <div class="order-info">
+        <div class="checkout-summary bg-light p-4 shadow rounded">
+            <h3 class="mb-3">Checkout</h3>
+            <ul class="list-group mb-3">
                 {% for item in cart %}
-                    <li>
-                        {{ item.quantity }}x {{ item.product.name }}
-                        <p>$ {{ item.total_price }}</p>
+                    <li class="list-group-item d-flex justify-content-between align-items-center ml-3">
+                        <span>{{ item.quantity }}x {{ item.product.name }}</span>
+                        <strong>$ {{ item.total_price }}</strong>
                     </li>
                 {% endfor %}
-                <p><strong>Total:</strong> ${{ cart.get_total_price }}</p>
-            </div>
+            </ul>
+            <p class="text-end fw-bold">Total: ${{ cart.get_total_price }}</p>
         </div>
     </div>
 {% endblock content %}
+

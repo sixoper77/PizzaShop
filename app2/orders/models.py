@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 from django.db import models
 
@@ -15,7 +16,8 @@ class Order(models.Model):
     created=models.DateField(auto_now_add=True)
     updated=models.DateField(auto_now=True)
     paid=models.BooleanField(default=False)
-    
+    stripe_id=models.CharField(max_length=255,blank=True)
+    telegram_id=models.CharField(max_length=255,blank=True)
     class Meta:
         ordering=['-created']
         indexes=[
@@ -28,6 +30,14 @@ class Order(models.Model):
     def get_total_const(self):
         return sum(item.get_const() for item in self.items.all())
 
+    def get_stripe_url(self):
+        if not self.stripe_id:
+            return ''
+        if '_test_' in settings.STRIPE_SECRET_KEY:
+            path='/test/'
+        else:
+            path='/'
+        return f'https://dashboard.stripe.com{path}payments/{self.stripe_id}'
 class OrderItem(models.Model):
     order=models.ForeignKey(Order,related_name='items',on_delete=models.CASCADE)
     product=models.ForeignKey(Products,related_name='order_items',on_delete=models.CASCADE)
