@@ -5,7 +5,11 @@ from django.views.decorators.csrf import csrf_exempt
 import stripe.error
 from orders.models import Order
 from main.models import Products
-
+import requests
+import os
+from dotenv import load_dotenv
+load_dotenv()
+BOT_TOKEN=os.getenv('BOT_TOKEN')
 @csrf_exempt
 def stripe_webhook(request):
     payload=request.body
@@ -27,4 +31,15 @@ def stripe_webhook(request):
             order.paid=True
             order.stripe_id=session.payment_intent
             order.save()
+            try:
+                requests.post(
+                f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage",
+                json={
+                    "chat_id": order.telegram_id,
+                    "text": f"✅ Оплата за заказ #{order.id} прошла успешно!"
+                }
+            )
+            except Exception as e:
+                print(e)
+            
     return HttpResponse(status=200)       

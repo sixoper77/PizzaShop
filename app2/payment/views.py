@@ -34,7 +34,7 @@ def payment_process(request):
             'line_items': []
         }
         
-        for item in order.items.all():  # Исправлено "order.item.all()" -> "order.items.all()"
+        for item in order.items.all():
             discounted_price = item.product.sell_price()
             session_data['line_items'].append({
                 'price_data': {
