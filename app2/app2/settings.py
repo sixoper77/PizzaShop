@@ -22,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-^x2sqtzyopq8c!+ts)9r47t*9fo5ctcul#xh7f2yd4wk_$mu*7'
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -211,5 +211,4 @@ ACCOUNT_LOGIN_METHODS = {"username", "email"}
 UNFOLD = {
     "STUDIO": True,
 }
-
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
