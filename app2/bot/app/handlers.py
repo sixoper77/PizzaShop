@@ -12,8 +12,6 @@ from aiogram.types import InputMediaPhoto
 from .data import add_to_cart,show_cart,save_telegram_id,clear_cart,save_telegram_order,checkout_telegram
 from .state import *
 router = Router()
-
-
 @router.message(CommandStart())
 async def command_start(message: Message):
     await message.answer('Привет,это тест бот.\nАвтор данного треша- @sixoper77', reply_markup=kb.menu)
@@ -80,18 +78,20 @@ async def item(callback: CallbackQuery, state: FSMContext):
                 return
 
     
-    keyboard_buttons = [[InlineKeyboardButton(text='Назад', callback_data='Category')]]
+    keyboard_buttons = []
+    row=[]
     if product_index > 0:
         prev_product_id = products[product_index - 1]["id"]
-        keyboard_buttons.append([InlineKeyboardButton(text='Прошлая пицца', callback_data=f'product_{prev_product_id}')])
+        row.append(InlineKeyboardButton(text='Прошлая пицца', callback_data=f'product_{prev_product_id}'))
     if product_index < len(products) - 1:
         next_product_id = products[product_index + 1]["id"]
-        keyboard_buttons.append([InlineKeyboardButton(text='Следующая пицца', callback_data=f'product_{next_product_id}')])
-
+        row.append(InlineKeyboardButton(text='Следующая пицца', callback_data=f'product_{next_product_id}'))
+    keyboard_buttons.append(row)
     keyboard_buttons.append([InlineKeyboardButton(text='🛒 Добавить в корзину', callback_data=f'add_to_cart_{product_id}')])
     keyboard_buttons.append([InlineKeyboardButton(text='Просмотреть корзину', callback_data='show_cart')])
     keyboard_buttons.append([InlineKeyboardButton(text='Почистить корзину', callback_data='clear_cart')])
     keyboard_buttons.append([InlineKeyboardButton(text='Cоздать ордер', callback_data='create_order')])
+    keyboard_buttons.append([InlineKeyboardButton(text='Назад', callback_data='Category')])
     keyboard = InlineKeyboardMarkup(inline_keyboard=keyboard_buttons)
 
     await callback.message.edit_media(
@@ -200,7 +200,6 @@ async def add_cart(callback:CallbackQuery,state:FSMContext):
         return
     print(f"Добавляем в корзину: {product}")
     succes=await add_to_cart({'product_id':product_id,'quantity':1,'telegram_id':user_id},user_id)
-    # show=await show_cart(user_id)
     print(succes)
 
     if succes:
