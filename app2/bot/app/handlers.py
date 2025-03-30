@@ -9,7 +9,7 @@ from aiogram.types import CallbackQuery, BufferedInputFile
 from aiogram.fsm.context import FSMContext
 from aiogram.types import InlineKeyboardMarkup,InlineKeyboardButton
 from aiogram.types import InputMediaPhoto
-from .data import add_to_cart,show_cart,save_telegram_id,clear_cart,save_telegram_order,checkout_telegram
+from .data import *
 from .state import *
 router = Router()
 @router.message(CommandStart())
@@ -69,37 +69,14 @@ async def item(callback: CallbackQuery, state: FSMContext):
     product = products[product_index]
     image_url = product.get("image_url")
 
-    async with aiohttp.ClientSession() as session:
-        async with session.get(image_url) as response:
-            if response.status == 200:
-                image_bytes = await response.read()
-            else:
-                await callback.message.answer("Ошибка загрузки изображения")
-                return
-
-    
-    keyboard_buttons = []
-    row=[]
-    if product_index > 0:
-        prev_product_id = products[product_index - 1]["id"]
-        row.append(InlineKeyboardButton(text='Прошлая пицца', callback_data=f'product_{prev_product_id}'))
-    if product_index < len(products) - 1:
-        next_product_id = products[product_index + 1]["id"]
-        row.append(InlineKeyboardButton(text='Следующая пицца', callback_data=f'product_{next_product_id}'))
-    keyboard_buttons.append(row)
-    keyboard_buttons.append([InlineKeyboardButton(text='🛒 Добавить в корзину', callback_data=f'add_to_cart_{product_id}')])
-    keyboard_buttons.append([InlineKeyboardButton(text='Просмотреть корзину', callback_data='show_cart')])
-    keyboard_buttons.append([InlineKeyboardButton(text='Почистить корзину', callback_data='clear_cart')])
-    keyboard_buttons.append([InlineKeyboardButton(text='Cоздать ордер', callback_data='create_order')])
-    keyboard_buttons.append([InlineKeyboardButton(text='Назад', callback_data='Category')])
-    keyboard = InlineKeyboardMarkup(inline_keyboard=keyboard_buttons)
+    image_bytes=await get_image_url(image_url)
 
     await callback.message.edit_media(
         media=InputMediaPhoto(
             media=BufferedInputFile(image_bytes, filename="product.jpg"),
             caption=f"🛒 {product['name']}\n💰 Цена: {product['price']}$ \nСостав: {product['description']}"
         ),
-        reply_markup=keyboard
+        reply_markup=kb.switch_item(product_index,product_id,products)
     )
     
 @router.callback_query(F.data.startswith('next_pizza_'))
@@ -115,30 +92,13 @@ async def next_pizza(callback: CallbackQuery, state: FSMContext):
     if index < len(products):  
         product = products[index]
         image_url = product.get("image_url")
-        async with aiohttp.ClientSession() as session:
-            async with session.get(image_url) as response:
-                if response.status == 200:
-                    image_bytes = await response.read()
-                else:
-                    await callback.message.answer("Ошибка загрузки изображения")
-                    return
-
-        keyboard = InlineKeyboardMarkup(inline_keyboard=[
-            [InlineKeyboardButton(text='Назад', callback_data='Category')],
-            [InlineKeyboardButton(text='Следующая пицца', callback_data=f'next_pizza_{index}')],
-            [InlineKeyboardButton(text='Прошлая пицца', callback_data=f'back_pizza_{index}')],
-            [InlineKeyboardButton(text='Добавить в корзину', callback_data=f'add_to_cart_{product['id']}')],
-            [InlineKeyboardButton(text='Просмотреть корзину', callback_data='show_cart')],
-            [InlineKeyboardButton(text='Почистить корзину', callback_data='clear_cart')],
-            [InlineKeyboardButton(text='Создать ордер', callback_data='create_order')]
-            
-        ])
+        image_bytes=await get_image_url(image_url)
         await callback.message.edit_media(
             media=InputMediaPhoto(
                 media=BufferedInputFile(image_bytes, filename="product.jpg"),
                 caption=f"🛒 {product['name']}\n💰 Цена: {product['price']}$\n Состав:{product['description']}"
             ),
-            reply_markup=keyboard
+            reply_markup=kb.switch_item(index,product['id'],products)
         )
     else:
         await callback.answer('Это последняя пицца')
@@ -157,30 +117,13 @@ async def back_pizza(callback: CallbackQuery, state: FSMContext):
     if index >= 0:
         product = products[index]
         image_url = product.get("image_url")
-
-        async with aiohttp.ClientSession() as session:
-            async with session.get(image_url) as response:
-                if response.status == 200:
-                    image_bytes = await response.read()
-                else:
-                    await callback.message.answer("Ошибка загрузки изображения")
-                    return
-
-        keyboard = InlineKeyboardMarkup(inline_keyboard=[
-            [InlineKeyboardButton(text='Назад', callback_data='Category')],
-            [InlineKeyboardButton(text='Прошлая пицца', callback_data=f'back_pizza_{index}')] if index > 0 else [],
-            [InlineKeyboardButton(text='Следующая пицца', callback_data=f'next_pizza_{index}')],
-            [InlineKeyboardButton(text='Добавить в корзину', callback_data=f'add_to_cart_{product['id']}')],
-            [InlineKeyboardButton(text='Просмотреть корзину', callback_data='show_cart')],
-            [InlineKeyboardButton(text='Почистить корзину', callback_data='clear_cart')],
-            [InlineKeyboardButton(text='Создать ордер', callback_data='create_order')]
-        ])
+        image_bytes=await get_image_url(image_url)
         await callback.message.edit_media(
             media=InputMediaPhoto(
                 media=BufferedInputFile(image_bytes, filename="product.jpg"),
                 caption=f"🛒 {product['name']}\n💰 Цена: {product['price']}$ \nСостав:{product['description']}"
             ),
-            reply_markup=keyboard
+            reply_markup=kb.switch_item(index,product['id'],products)
         )
     else:
         await callback.answer("Это первая пицца!") 
@@ -354,6 +297,4 @@ async def pay(callback:CallbackQuery,state:FSMContext):
     data=await checkout_telegram(order_id)
     await callback.message.answer(
                 f"Ссылка для оплаты:\n{data['stripe_url']}",
-                
             )
-    

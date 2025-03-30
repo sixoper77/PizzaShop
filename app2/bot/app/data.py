@@ -84,3 +84,10 @@ async def checkout_telegram(order_id):
             print(f"Ошибка при запросе: {str(e)}")
             return {'error': str(e)}
 
+async def get_image_url(image_url):
+    async with aiohttp.ClientSession() as session:
+        async with session.get(image_url) as response:
+            if response.status==200:
+                return await response.read()
+            else:
+                return
