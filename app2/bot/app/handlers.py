@@ -264,7 +264,8 @@ async def confirm_order(callback: CallbackQuery, state: FSMContext):
         if response.get("status") == "success":
             kb.menu.inline_keyboard.append([InlineKeyboardButton(text='Оплатить', callback_data=f'pay_order_{response['order_id']}')])
             await callback.message.answer(
-                f"✅ Ваш заказ успешно создан! Номер заказа: {response['order_id']}",
+                f"✅ Ваш заказ успешно создан! Номер заказа: {response['order_id']}\
+                Что бы сформировать ссылку оплаты нажмите кнопку Оплатить",
                 reply_markup=kb.menu
             )
             await clear_cart(user_id)  
@@ -296,5 +297,4 @@ async def pay(callback:CallbackQuery,state:FSMContext):
     order_id=callback.data[10:]
     data=await checkout_telegram(order_id)
     await callback.message.answer(
-                f"Ссылка для оплаты:\n{data['stripe_url']}",
-            )
+                f"Ссылка для оплаты Готова!",reply_markup=kb.payment_button(data['stripe_url']))

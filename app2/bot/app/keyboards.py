@@ -62,4 +62,7 @@ def switch_item(product_index,product_id,products):
     keyboard_buttons.append([InlineKeyboardButton(text='Назад', callback_data='Category')])
     keyboard = InlineKeyboardMarkup(inline_keyboard=keyboard_buttons)    
     return keyboard
-
+def payment_button(link):
+    return InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text='Оплатить',url=link)],
+    ])
